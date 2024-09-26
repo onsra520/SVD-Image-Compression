@@ -1,2 +1,0 @@
-# Singular Value Decomposition
- 
