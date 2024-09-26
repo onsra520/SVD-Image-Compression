@@ -22,7 +22,7 @@ Dựa trên thứ tự của corresponding singular values, ta xây dựng các 
 
 Với SVD, chúng ta có thể diễn giải lại phép biến đổi tuyến tính này như ba phép biến đổi riêng biệt (được áp dụng từ phải sang trái):
 
-1. **Phép quay hệ trục tọa độ với ma trận** \( \mathbf{V^\mathsf{T}} \):  
+1. **Phép quay hệ trục tọa độ với ma trận** \(\mathbf{V^\mathsf{T}}\):  
    Vì \( \mathbf{V^\mathsf{T}} \) là ma trận kích thước \( n \times n \), phép này tương ứng với một phép quay trong không gian của chiều đầu vào.
 
 2. **Phép co giãn bởi các giá trị kỳ dị** \( \sigma_i \) cho mọi \( i \):  
