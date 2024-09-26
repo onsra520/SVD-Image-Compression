@@ -24,11 +24,11 @@ Với SVD, chúng ta có thể diễn giải lại phép biến đổi tuyến t
 
 1. **Phép quay hệ trục tọa độ với ma trận** $\mathbf{V}^\mathsf{T}$:  
    Vì $\mathbf{V}^\mathsf{T}$ là ma trận kích thước $n \times n$, phép này tương ứng với một phép quay trong không gian của chiều đầu vào.
-
-2. **Phép co giãn bởi singular values** $\sigma_i$ cho mọi $i$:  
+   
+3. **Phép co giãn bởi singular values** $\sigma_i$ cho mọi $i$:  
    Số lượng các giá trị này không vượt quá $\text{min}(m, n)$. Việc nhân với ma trận này cũng sẽ mở rộng các vector của ma trận mới bằng các giá trị 0.
-
-3. **Phép quay hệ trục tọa độ với ma trận** $\mathbf{U}$:  
+   
+5. **Phép quay hệ trục tọa độ với ma trận** $\mathbf{U}$:  
    Vì $\mathbf{U}$ là ma trận kích thước $m \times m$, phép này tương ứng với một phép quay trong không gian mới $\mathbb{R}^m$.
 
 ---
@@ -39,3 +39,8 @@ Ba phép biến đổi này giúp ta hiểu rõ hơn về cách mà SVD làm tha
 - Và quay trong không gian.
 
 ## Image Compression
+
+# Singular Value Decomposition (SVD) and Its Applications
+
+Như chúng ta đã thấy, SVD có thể rất hữu ích trong việc tìm kiếm các mối quan hệ quan trọng trong dữ liệu, đặc biệt là với dữ liệu có chiều cao. Điều này có nhiều ứng dụng trong học máy, tài chính và khoa học dữ liệu. Một trong những ứng dụng của SVD là trong **image compression**. 
+Mặc dù không có định dạng hình ảnh lớn nào sử dụng SVD do độ phức tạp tính toán của nó, SVD vẫn có thể được áp dụng trong các trường hợp khác như một cách để nén dữ liệu.
