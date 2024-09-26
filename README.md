@@ -131,3 +131,25 @@ Chuyển đổi hình ảnh sang màu xám trong **Image Compression bằng SVD*
 
 
 ## Chuẩn hóa (Normalization)
+
+**Chuẩn hóa** (_Normalization_) là quá trình biến đổi các giá trị của một tập dữ liệu sao cho chúng nằm trong một khoảng xác định, thường là từ **0 đến 1** hoặc từ **-1 đến 1**. Điều này giúp đảm bảo rằng tất cả các giá trị đều có cùng thang đo, giúp các thuật toán xử lý hiệu quả hơn.
+
+Trong **Image Compression**, khi xử lý hình ảnh dưới dạng ma trận số, giá trị của mỗi pixel thường nằm trong khoảng từ 0 đến 255 (đối với ảnh 8-bit). Việc **chia ma trận cho 255** giúp chuẩn hóa (Normalization) các giá trị pixel về khoảng [0, 1].
+
+$$
+\text{giá trị chuẩn hóa} = \frac{\text{giá trị pixel}}{255}
+$$
+
+```python
+def Convert_Image_To_Matrix(Image_Name):
+    if Image_Name in os.listdir('Images_Folder'):
+        Image = cv2.imread(os.path.join('Images_Folder', Image_Name))
+        Gray_Image = cv2.cvtColor(Image, cv2.COLOR_BGR2GRAY)
+        Data = np.array(Gray_Image)/255 # Chuẩn hóa dữ liệu
+        return Data
+    else: print("Picture not found!!!!")
+```
+
+
+
+
