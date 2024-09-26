@@ -18,4 +18,22 @@ Có thể áp dụng decomposition cho bất kỳ ma trận $m \times n$ ma tr�
 
 Có thể tính decomposition bằng cách phân tích giá trị riêng (Eigenvalues) và vector riêng (Eigenvectors) của $\mathbf{A^\mathsf{T}A}$ và $\mathbf{AA^\mathsf{T}}$, trong đó các giá trị riêng (Eigenvalues) của cả hai ma trận này đều bằng bình phương của singular values. Sau đó, chúng ta sắp xếp các giá trị kỳ dị này theo thứ tự giảm dần và đưa chúng vào đường chéo của ma trận $\mathbf \Sigma$.
 
-Dựa trên thứ tự của corresponding singular values, ta xây dựng các cột của ma trận $\mathbf U$ từ các vector riêng (Eigenvectors) của ma trận $\mathbf{AA^\mathsf{T}}$, và các hàng của ma trận $\mathbf V^\mathsf{T}$ (các cột của $\mathbf V$) từ các vector riêng (Eigenvectors) của $\mathbf{A^\mathsf{T}A}$
+Dựa trên thứ tự của corresponding singular values, ta xây dựng các cột của ma trận $\mathbf U$ từ các vector riêng (Eigenvectors) của ma trận $\mathbf{AA^\mathsf{T}}$, và các hàng của ma trận $\mathbf V^\mathsf{T}$ (các cột của $\mathbf V$) từ các vector riêng (Eigenvectors) của $\mathbf{A^\mathsf{T}A}$.
+
+Với SVD, chúng ta có thể diễn giải lại phép biến đổi tuyến tính này như ba phép biến đổi riêng biệt (được áp dụng từ phải sang trái):
+
+1. **Phép quay hệ trục tọa độ với ma trận** \( \mathbf{V^\mathsf{T}} \):  
+   Vì \( \mathbf{V^\mathsf{T}} \) là ma trận kích thước \( n \times n \), phép này tương ứng với một phép quay trong không gian của chiều đầu vào.
+
+2. **Phép co giãn bởi các giá trị kỳ dị** \( \sigma_i \) cho mọi \( i \):  
+   Số lượng các giá trị này không vượt quá \( \text{min}(m, n) \). Việc nhân với ma trận này cũng sẽ mở rộng các vector của ma trận mới bằng các giá trị 0.
+
+3. **Phép quay hệ trục tọa độ với ma trận** \( \mathbf{U} \):  
+   Vì \( \mathbf{U} \) là ma trận kích thước \( m \times m \), phép này tương ứng với một phép quay trong không gian mới \( \mathbb{R}^m \).
+
+---
+
+Ba phép biến đổi này giúp ta hiểu rõ hơn về cách mà SVD làm thay đổi dữ liệu thông qua các bước:  
+- Quay,
+- Co giãn,  
+- Và quay trong không gian.
