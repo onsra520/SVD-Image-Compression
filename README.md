@@ -48,11 +48,15 @@ SVD có thể rất hữu ích trong việc tìm kiếm các mối quan hệ qua
 import cv2
 import matplotlib.pyplot as plt
 
+# Đọc hình ảnh
 Image = cv2.imread('Meme.png')
+
+# Chuyển đổi hình ảnh sang màu xám
 Gray_Image = cv2.cvtColor(Image, cv2.COLOR_BGR2GRAY)
 
-plt.imshow(image, cmap='gray')
-plt.title('Cat Image')
+# Hiển thị hình ảnh màu xám
+plt.imshow(image, cmap='gray') # Thêm cmap='gray' để hiển thị đúng màu xám
+plt.title('Cat Image') # Tắt trục tọa độ nếu không cần thiết
 plt.show()
 ```
 
@@ -88,7 +92,15 @@ Kết quả của quá trình chuyển đổi này là một ma trận hai chi�
 
 Do đó, ảnh xám và ma trận ban đầu không giống nhau về kích thước và nội dung. Ảnh xám đơn giản hóa hình ảnh bằng cách giảm số lượng kênh màu từ ba xuống một, trong khi vẫn giữ lại thông tin ánh sáng tổng thể.
 
+## Tại sao trong SVD Image Compression phải chuyển qua ảnh xám?
 
+Chuyển đổi hình ảnh sang màu xám trong **Image Compression bằng SVD** có một số lý do chính, bao gồm:
+
+### 1. Giảm Kích Thước Dữ Liệu
+- Hình ảnh màu thường có ba kênh màu (Red, Green, Blue), trong khi hình ảnh xám chỉ có một kênh. Điều này có nghĩa là khi chuyển đổi sang ảnh xám, số lượng dữ liệu cần xử lý giảm đi một phần ba. Việc giảm kích thước này giúp tăng tốc độ xử lý và giảm lượng bộ nhớ cần thiết.
+
+### 2. Giảm Độ Phức Tạp Tính Toán
+- Việc làm việc với ma trận 2D (hình ảnh xám) thay vì ma trận 3D (hình ảnh màu) đơn giản hóa các phép toán. SVD cần phải thực hiện trên các ma trận lớn, và việc giảm kích thước ma trận sẽ giúp giảm độ phức tạp tính toán.
 
 
 
