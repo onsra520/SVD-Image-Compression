@@ -44,7 +44,17 @@ Ba phép biến đổi này giúp ta hiểu rõ hơn về cách mà SVD làm tha
 
 SVD có thể rất hữu ích trong việc tìm kiếm các mối quan hệ quan trọng trong dữ liệu. Điều này có nhiều ứng dụng trong học máy, tài chính và khoa học dữ liệu. Một trong những ứng dụng của SVD là trong **image compression**. Mặc dù không có định dạng hình ảnh lớn nào sử dụng SVD do độ phức tạp tính toán của nó, SVD vẫn có thể được áp dụng trong các trường hợp khác như một cách để nén dữ liệu.
 
+```python
+import cv2
+import matplotlib.pyplot as plt
 
+Image = cv2.imread('Meme.png')
+Gray_Image = cv2.cvtColor(Image, cv2.COLOR_BGR2GRAY)
+
+plt.imshow(image, cmap='gray')
+plt.title('Cat Image')
+plt.show()
+```
 
 
 
