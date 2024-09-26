@@ -64,9 +64,9 @@ Khi bạn đọc một hình ảnh và chuyển nó thành ảnh xám, quá trì
 
 ### 1. Đọc Hình Ảnh
 Khi bạn sử dụng `cv2.imread()` để đọc hình ảnh, OpenCV trả về một ma trận ba chiều (3D) với kích thước \( H \times W \times 3 \), trong đó:
-- **H**: Chiều cao của hình ảnh.
-- **\( W \)**: Chiều rộng của hình ảnh.
-- **3**: Ba kênh màu (Blue, Green, Red).
+- ***H***: Chiều cao của hình ảnh.
+- ***W***: Chiều rộng của hình ảnh.
+- ***3***: Ba kênh màu (Blue, Green, Red).
 
 ### 2. Chuyển Đổi Sang Ảnh Xám
 Khi bạn chuyển đổi hình ảnh màu sang ảnh xám bằng `cv2.cvtColor(Image, cv2.COLOR_BGR2GRAY)`, OpenCV sử dụng công thức sau để tính giá trị độ xám cho mỗi pixel:
