@@ -64,7 +64,7 @@ Khi bạn đọc một hình ảnh và chuyển nó thành ảnh xám, quá trì
 
 ### 1. Đọc Hình Ảnh
 Khi bạn sử dụng `cv2.imread()` để đọc hình ảnh, OpenCV trả về một ma trận ba chiều (3D) với kích thước \( H \times W \times 3 \), trong đó:
-- **(\ H \)**: Chiều cao của hình ảnh.
+- **H**: Chiều cao của hình ảnh.
 - **\( W \)**: Chiều rộng của hình ảnh.
 - **3**: Ba kênh màu (Blue, Green, Red).
 
