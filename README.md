@@ -40,6 +40,33 @@ Ba phép biến đổi này giúp ta hiểu rõ hơn về cách mà SVD làm tha
 
 # Singular Value Decomposition (SVD) and Its Applications
 
+## Chuyển đổi định dạng ảnh sang PNG
+
+### Tại sao sử dụng ảnh định dạng PNG trong Image Compression?
+
+1. **Không mất dữ liệu (Lossless)**: PNG sử dụng phương pháp nén không làm mất dữ liệu, đảm bảo chất lượng hình ảnh không thay đổi sau khi nén, rất phù hợp cho các ứng dụng cần độ chính xác cao (ví dụ: đồ họa hoặc hình ảnh y tế).
+
+2. **Hỗ trợ kênh alpha (độ trong suốt)**: PNG hỗ trợ kênh alpha, cho phép hiển thị các vùng trong suốt, điều này rất quan trọng trong thiết kế đồ họa hoặc các ứng dụng cần lớp nền trong suốt.
+
+3. **Khả năng nén tốt cho hình ảnh ít màu**: PNG hiệu quả hơn đối với các hình ảnh có ít màu sắc hoặc sự chuyển màu rõ rệt, như biểu đồ, biểu tượng hoặc ảnh chứa văn bản.
+
+Tuy nhiên, với hình ảnh phức tạp, nhiều màu sắc, định dạng JPEG có thể hiệu quả hơn trong việc giảm kích thước file nhờ nén có mất dữ liệu.
+
+```python
+import os, glob
+
+Root = os.getcwd() # Lưu địa chỉ hiện tại của
+def Convert_to_PNG():
+   os.chdir(os.path.join(Root,'Images_Folder')) # Truy cập vào Folder con có tên là 'Images_Folder'
+   image_patterns = ["*.jpeg", "*.jpg"] # Các định dạng File cần chuyển sang PNG 
+   for pattern in image_patterns:
+      for image_file in glob.glob(pattern): # glob.glob() kiểm tra trong Folder có các ảnh có định dạng trong image_patterns   
+         if not image_file.endswith(".png"): # .endswith(".png") kiểm tra định dạng của ảnh
+               new_file = os.path.splitext(image_file)[0] + ".png" 
+               os.rename(image_file, new_file) # Đổi tên cho ảnh
+   os.chdir(Root) # Truy cập về lại Folder phụ huynh
+```
+
 ## Image Compression
 
 SVD có thể rất hữu ích trong việc tìm kiếm các mối quan hệ quan trọng trong dữ liệu. Điều này có nhiều ứng dụng trong học máy, tài chính và khoa học dữ liệu. Một trong những ứng dụng của SVD là trong **image compression**. Mặc dù không có định dạng hình ảnh lớn nào sử dụng SVD do độ phức tạp tính toán của nó, SVD vẫn có thể được áp dụng trong các trường hợp khác như một cách để nén dữ liệu.
@@ -103,5 +130,4 @@ Chuyển đổi hình ảnh sang màu xám trong **Image Compression bằng SVD*
 - Việc làm việc với ma trận 2D (hình ảnh xám) thay vì ma trận 3D (hình ảnh màu) đơn giản hóa các phép toán. SVD cần phải thực hiện trên các ma trận lớn, và việc giảm kích thước ma trận sẽ giúp giảm độ phức tạp tính toán.
 
 
-
-
+## Chuẩn hóa (Normalization)
