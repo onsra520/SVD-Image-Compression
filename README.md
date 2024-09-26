@@ -58,17 +58,17 @@ plt.show()
 
 ![png](Markdown/Output_1.png)
 
-# Giải Thích Về Chuyển Đổi Hình Ảnh Sang Ảnh Xám
+## Giải Thích Về Chuyển Đổi Hình Ảnh Sang Ảnh Xám
 
 Khi bạn đọc một hình ảnh và chuyển nó thành ảnh xám, quá trình chuyển đổi không đơn giản là thay thế một ma trận 3x3 (mà bạn thấy khi đọc hình ảnh màu) bằng một ma trận 3x3 khác. Thay vào đó, đó là một quá trình xử lý hình ảnh bao gồm nhiều bước.
 
-## 1. Đọc Hình Ảnh
+### 1. Đọc Hình Ảnh
 Khi bạn sử dụng `cv2.imread()` để đọc hình ảnh, OpenCV trả về một ma trận ba chiều (3D) với kích thước \( H \times W \times 3 \), trong đó:
 - **\( H \)**: Chiều cao của hình ảnh.
 - **\( W \)**: Chiều rộng của hình ảnh.
 - **3**: Ba kênh màu (Blue, Green, Red).
 
-## 2. Chuyển Đổi Sang Ảnh Xám
+### 2. Chuyển Đổi Sang Ảnh Xám
 Khi bạn chuyển đổi hình ảnh màu sang ảnh xám bằng `cv2.cvtColor(Image, cv2.COLOR_BGR2GRAY)`, OpenCV sử dụng công thức sau để tính giá trị độ xám cho mỗi pixel:
 
 \[
@@ -79,7 +79,7 @@ Trong đó:
 - \( R, G, B \): Giá trị màu của từng pixel trong ba kênh màu.
 - \( Y \): Giá trị độ xám tương ứng.
 
-## 3. Ma Trận Ảnh Xám
+### 3. Ma Trận Ảnh Xám
 Kết quả của quá trình chuyển đổi này là một ma trận hai chiều (2D) với kích thước \( H \times W \). Mỗi giá trị trong ma trận này đại diện cho độ xám của pixel tại vị trí tương ứng.
 
 ---
