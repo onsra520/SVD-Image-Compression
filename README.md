@@ -7,9 +7,9 @@
 
 Singular Value Decomposition - SVD là một kỹ thuật phân tích ma trận, phân tách bất kỳ ma trận nào thành ba ma trận riêng biệt.
 
-**$$
+$$
     **\mathbf{A} = \mathbf{U\Sigma V^\mathsf{T}}**
-$$**
+$$
 
 Có thể áp dụng decomposition cho bất kỳ ma trận $m \times n$ ma trận $\mathbf A$, kết quả là ba ma trận:
 - $\mathbf U$: Đây là ma trận trực giao(orthogonal matrix) kích thước $m \times m$. Các cột của ma trận này là left-singular vectors của $\mathbf A$.
@@ -37,3 +37,5 @@ Ba phép biến đổi này giúp ta hiểu rõ hơn về cách mà SVD làm tha
 - Quay,
 - Co giãn,  
 - Và quay trong không gian.
+
+## Image Compression
