@@ -38,9 +38,9 @@ Ba phép biến đổi này giúp ta hiểu rõ hơn về cách mà SVD làm tha
 - Co giãn,  
 - Và quay trong không gian.
 
-## Image Compression
-
 # Singular Value Decomposition (SVD) and Its Applications
+
+## Image Compression
 
 SVD có thể rất hữu ích trong việc tìm kiếm các mối quan hệ quan trọng trong dữ liệu. Điều này có nhiều ứng dụng trong học máy, tài chính và khoa học dữ liệu. Một trong những ứng dụng của SVD là trong **image compression**. Mặc dù không có định dạng hình ảnh lớn nào sử dụng SVD do độ phức tạp tính toán của nó, SVD vẫn có thể được áp dụng trong các trường hợp khác như một cách để nén dữ liệu.
 
@@ -56,7 +56,7 @@ plt.title('Cat Image')
 plt.show()
 ```
 
-
+![png](Markdown/Output_1.png)
 
 
 
