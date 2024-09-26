@@ -8,7 +8,7 @@
 Singular Value Decomposition - SVD là một kỹ thuật phân tích ma trận, phân tách bất kỳ ma trận nào thành ba ma trận riêng biệt.
 
 $$
-    \mathbf{A} = \mathbf{U\Sigma V^\mathsf{T}}
+    **\mathbf{A} = \mathbf{U\Sigma V^\mathsf{T}}**
 $$
 
 Có thể áp dụng decomposition cho bất kỳ ma trận $m \times n$ ma trận $\mathbf A$, kết quả là ba ma trận:
@@ -25,7 +25,7 @@ Với SVD, chúng ta có thể diễn giải lại phép biến đổi tuyến t
 1. **Phép quay hệ trục tọa độ với ma trận** $\mathbf{V}^\mathsf{T}$:  
    Vì $\mathbf{V}^\mathsf{T}$ là ma trận kích thước $n \times n$, phép này tương ứng với một phép quay trong không gian của chiều đầu vào.
 
-2. **Phép co giãn bởi các giá trị kỳ dị** $\sigma_i$ cho mọi $i$:  
+2. **Phép co giãn bởi singular values** $\sigma_i$ cho mọi $i$:  
    Số lượng các giá trị này không vượt quá $\text{min}(m, n)$. Việc nhân với ma trận này cũng sẽ mở rộng các vector của ma trận mới bằng các giá trị 0.
 
 3. **Phép quay hệ trục tọa độ với ma trận** $\mathbf{U}$:  
