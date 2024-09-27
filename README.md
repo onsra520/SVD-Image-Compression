@@ -273,16 +273,7 @@ Kết quả là:
 | y2 |0.45868235|0.45868235|0.45868235|
 | y3 |0.45868235|0.45868235|0.45868235|
 
-<div style="display: flex; justify-content: center; align-items: center;">
-  <div style="text-align: center;">
-    <img src="Markdown_Folder/Output_1.png" alt="Ảnh không chuẩn hóa" width="250" height="250">
-    <p>Ảnh không chuẩn hóa</p>
-  </div>
-  <div style="text-align: center;">
-    <img src="Markdown_Folder/Output_1.png" alt="Ảnh đã chuẩn hóa" width="250" height="250">
-    <p>Ảnh đã chuẩn hóa</p>
-  </div>
-</div>
+
 
 
 
