@@ -279,7 +279,7 @@ Kết quả là:
     <p>Ảnh không chuẩn hóa</p>
   </div>
   <div style="text-align: center;">
-    <img src="Markdown_Folder/Output_2.png" alt="Ảnh đã chuẩn hóa" width="250" height="250">
+    <img src="Markdown_Folder/Output_1.png" alt="Ảnh đã chuẩn hóa" width="250" height="250">
     <p>Ảnh đã chuẩn hóa</p>
   </div>
 </div>
