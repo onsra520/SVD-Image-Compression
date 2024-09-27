@@ -188,8 +188,8 @@ $Y = 116.964$
 
 Sau khi chạy code thì sẽ ra ma trận $3 \times 3$ như sau:
 
-|    | x1    | x2    | x3    |
-|----|-------|-------|-------|
+|    | x1    | x2    | x3     |
+|----|-------|-------|--------|
 | y1 |116.964|116.964| 116.964|
 | y2 |116.964|116.964| 116.964|
 | y3 |116.964|116.964| 116.964|
@@ -226,24 +226,66 @@ $$
 \text{giá trị chuẩn hóa} = \frac{\text{giá trị pixel}}{255}
 $$
 
-Lấy ma trận $3 \times 3$ từ hình ảnh để tính:
 ```python
+Image = cv2.imread(os.path.join('Images_Folder','Meme.png'))
 
+print("Kích thước ảnh gốc:", Image.shape)
+
+Gray_Image = np.zeros((Image.shape[0], Image.shape[1])) # Tạo ma trận 0 bằng kích thước với ma trận xuất ra từ hình ảnh
+
+for Row in range(Image.shape[0]): # chạy qua các hàng
+    for Col in range(Image.shape[1]): # chạy qua các cột
+        Pixel = Image[Row, Col]  # Lấy các giá trị Pixel của định dạng BRG
+        Gray_Pixel = Pixel[0] * 0.114 + Pixel[1] * 0.587 + Pixel[2] * 0.299 # Chuyển sang Pixel của ảnh định dạng Gray
+        Normalization = Gray_Pixel / 255 # Chuẩn hóa dữ liệu của mỗi Pixel bằng cách chia cho 255
+        Gray_Image[Row, Col] = Normalization # Thêm các giá trị vào ảnh Gray
+
+print(Gray_Image)
 ```
-
+Lấy ra ma trận $3 \times 3$ để kiểm tra:
 
 ```python
-def Convert_Image_To_Matrix(Image_Name):
-    if Image_Name in os.listdir('Images_Folder'):
-        Image = cv2.imread(os.path.join('Images_Folder', Image_Name))
-        Gray_Image = cv2.cvtColor(Image, cv2.COLOR_BGR2GRAY) # Chuyển sang ảnh xám
-        Data = np.array(Gray_Image)/255 # Chuẩn hóa dữ liệu
-        Image_Show(Gray_Image)
-        return Data
-    else: print("Picture not found!!!!")
+Gray_Image_3x3 = Gray_Image[0:3, 0:3]
+for row in Gray_Image_3x3:
+    print(row)
 ```
-```python
-Convert_Image_To_Matrix('Meme.png')
-```
+Ta thấy được từ ma trận ban đầu:
+
+|    | x1    | x2    | x3     |     
+|----|-------|-------|--------|
+| y1 |116.964|116.964| 116.964|
+| y2 |116.964|116.964| 116.964|
+| y3 |116.964|116.964| 116.964|
+
+Sau khi chia cho 225:
+
+|    | x1                  | x2                  | x3                  |
+|----|---------------------|---------------------|---------------------|
+| y1 |$\frac{116.964}{255}$|$\frac{116.964}{255}$|$\frac{116.964}{255}$|
+| y2 |$\frac{116.964}{255}$|$\frac{116.964}{255}$|$\frac{116.964}{255}$|
+| y3 |$\frac{116.964}{255}$|$\frac{116.964}{255}$|$\frac{116.964}{255}$|
+
+Kết quả là:
+
+|    | x1       | x2       | x3       |      
+|----|----------|----------|----------|
+| y1 |0.45868235|0.45868235|0.45868235|
+| y2 |0.45868235|0.45868235|0.45868235|
+| y3 |0.45868235|0.45868235|0.45868235|
+
+<div style="display: flex; justify-content: center; align-items: center;">
+  <div style="text-align: center;">
+    <img src="Markdown_Folder/Output_1.png" alt="Ảnh không chuẩn hóa" width="250" height="250">
+    <p>Ảnh không chuẩn hóa</p>
+  </div>
+  <div style="text-align: center;">
+    <img src="Markdown_Folder/Output_2.png" alt="Ảnh đã chuẩn hóa" width="250" height="250">
+    <p>Ảnh đã chuẩn hóa</p>
+  </div>
+</div>
+
+
+
+
 
 
