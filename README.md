@@ -8,7 +8,7 @@
 Singular Value Decomposition - SVD là một kỹ thuật phân tích ma trận, phân tách bất kỳ ma trận nào thành ba ma trận riêng biệt.
 
 $$
-    **\mathbf{A} = \mathbf{U\Sigma V^\mathsf{T}}**
+    \mathbf{A} = \mathbf{U\Sigma V^\mathsf{T}}
 $$
 
 Có thể áp dụng decomposition cho bất kỳ ma trận $m \times n$ ma trận $\mathbf A$, kết quả là ba ma trận:
@@ -98,6 +98,22 @@ Khi bạn sử dụng `cv2.imread()` để đọc hình ảnh, OpenCV trả về
 - ***H***: Chiều cao của hình ảnh.
 - ***W***: Chiều rộng của hình ảnh.
 - ***3***: Ba kênh màu (Blue, Green, Red).
+
+```python
+import cv2
+
+Image = cv2.imread('Meme.png')
+Image_3x3 = Image[0:3, 0:3] # Lấy ra ma trận 3x3
+
+for row in Image_3x3:
+    print(row)
+```
+Sau khi chạy đoạn code trên thì sẽ ra 1 ma trận $3 \times 3$ với mỗi vị trí sẽ là **vector** với 3 hàng :
+|    | x1                | x2                | x3                |
+|----|-------------------|-------------------|-------------------|
+| y1 | [106, 115, 125]   | [106, 115, 125]   | [106, 115, 125]   |
+| y2 | [106, 115, 125]   | [106, 115, 125]   | [106, 115, 125]   |
+| y3 | [106, 115, 125]   | [106, 115, 125]   | [106, 115, 125]   |
 
 ### 2. Chuyển Đổi Sang Ảnh Xám
 Khi bạn chuyển đổi hình ảnh màu sang ảnh xám bằng `cv2.cvtColor(Image, cv2.COLOR_BGR2GRAY)`, OpenCV sử dụng công thức sau để tính giá trị độ xám cho mỗi pixel:
