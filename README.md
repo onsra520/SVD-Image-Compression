@@ -108,7 +108,7 @@ Image_3x3 = Image[0:3, 0:3] # Lấy ra ma trận 3x3
 for row in Image_3x3:
     print(row)
 ```
-Sau khi chạy đoạn code trên thì sẽ ra 1 ma trận $3 \times 3$ với mỗi vị trí sẽ là **vector** với 3 hàng :
+Sau khi chạy đoạn code trên thì sẽ ra ma trận $3 \times 3$ với mỗi vị trí sẽ là **vector** với 3 hàng :
 |    | x1                | x2                | x3                |
 |----|-------------------|-------------------|-------------------|
 | y1 | [106, 115, 125]   | [106, 115, 125]   | [106, 115, 125]   |
@@ -123,6 +123,36 @@ $Y = 0.299 \cdot R + 0.587 \cdot G + 0.114 \cdot B$
 Trong đó:
 - \( R, G, B \): Giá trị màu của từng pixel trong ba kênh màu.
 - \( Y \): Giá trị độ xám tương ứng.
+
+```python
+Image = cv2.imread('Meme.png')
+
+for Row in Image_3x3:
+    Pixel = Image[Row] * numpy.array([0.114, 0.587, 0.299])
+    Pixel.sum()
+    print(Row)
+```
+Vì mặc định của thư viện OpenCV khi đọc ảnh là ở định đạng màu **BGR** nên ta phải nhân tương ứng với vector:
+
+Ở điểm ảnh đầu tiên:
+
+| B | G | R |
+|---|---|---| 
+|106|115|125|
+
+$Y = 0.114 \cdot B + 0.587 \cdot G + 0.299 \cdot R$
+
+$Y = 0.114 \cdot 106 + 0.587 \cdot 115 + 0.299 \cdot 125$
+
+$Y = 116.964$
+
+Sau khi chạy code thì sẽ ra ma trận $3 \times 3$ như sau:
+
+|    | x1    | x2    | x3    |
+|----|-------|-------|-------|
+| y1 | 117   | 117   | 117   |
+| y2 | 117   | 117   | 117   |
+| y3 | 117   | 117   | 117   |
 
 ### 3. Ma Trận Ảnh Xám
 Kết quả của quá trình chuyển đổi này là một ma trận hai chiều (2D) với kích thước $\ H  \times W$. Mỗi giá trị trong ma trận này đại diện cho độ xám của pixel tại vị trí tương ứng.
