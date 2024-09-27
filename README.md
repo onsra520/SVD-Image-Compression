@@ -40,6 +40,16 @@ Ba phép biến đổi này giúp ta hiểu rõ hơn về cách mà SVD làm tha
 
 # Singular Value Decomposition (SVD) and Its Applications
 
+## Tạo các Folder cần thiết cho Image Compression.
+
+```python
+import os
+
+Root = os.getcwd()
+os.makedirs('Images_Folder', exist_ok=True)
+os.makedirs('Result_Folder', exist_ok=True)
+```
+
 ## Chuyển đổi định dạng ảnh sang PNG
 
 ### Tại sao sử dụng ảnh định dạng PNG trong Image Compression?
@@ -76,20 +86,29 @@ import cv2
 import matplotlib.pyplot as plt
 
 # Đọc hình ảnh
-Image = cv2.imread('Meme.png')
+Image = cv2.imread(os.path.join('Images_Folder','Meme.png'))
 
-# Chuyển đổi hình ảnh sang màu xám
-Gray_Image = cv2.cvtColor(Image, cv2.COLOR_BGR2GRAY)
+def Image_Show(Image):
+    # Hiển thị hình ảnh màu xám
+    plt.imshow(image, cmap='gray') # Thêm cmap='gray' để hiển thị đúng màu xám
+    plt.title('Cat Image') # Tắt trục tọa độ nếu không cần thiết
+    plt.show()
 
-# Hiển thị hình ảnh màu xám
-plt.imshow(image, cmap='gray') # Thêm cmap='gray' để hiển thị đúng màu xám
-plt.title('Cat Image') # Tắt trục tọa độ nếu không cần thiết
-plt.show()
+def Convert_Image_To_Matrix(Image_Name):
+    if Image_Name in os.listdir('Images_Folder'):
+        Image = cv2.imread(os.path.join('Images_Folder', Image_Name))
+        Gray_Image = cv2.cvtColor(Image, cv2.COLOR_BGR2GRAY) # Chuyển đổi hình ảnh sang màu xám
+        Data = np.array(Gray_Image)/255 # Chuẩn hóa dữ liệu
+        Image_Show(Gray_Image)
+        return Data
+    else: print("Picture not found!!!!")
+
+Convert_Image_To_Matrix('Meme.png')
 ```
 
 ![png](Markdown/Output_1.png)
 
-## Giải Thích Về Chuyển Đổi Hình Ảnh Sang Ảnh Xám
+## Giải Thích Về Chuyển Đổi Hình Ảnh Sang Ảnh Xám Và Chuẩn Hóa Dữ Liệu.
 
 Khi bạn đọc một hình ảnh và chuyển nó thành ảnh xám, quá trình chuyển đổi không đơn giản là thay thế một ma trận 3x3 (mà bạn thấy khi đọc hình ảnh màu) bằng một ma trận 3x3 khác. Thay vào đó, đó là một quá trình xử lý hình ảnh bao gồm nhiều bước.
 
@@ -99,10 +118,12 @@ Khi bạn sử dụng `cv2.imread()` để đọc hình ảnh, OpenCV trả về
 - ***W***: Chiều rộng của hình ảnh.
 - ***3***: Ba kênh màu (Blue, Green, Red).
 
+Khi lấy ra ma trận $\ 3 \times 3$ nó sẽ có dạng:
+
 ```python
 import cv2
 
-Image = cv2.imread('Meme.png')
+Image = cv2.imread(os.path.join('Images_Folder','Meme.png'))
 Image_3x3 = Image[0:3, 0:3] # Lấy ra ma trận 3x3
 
 for row in Image_3x3:
@@ -125,13 +146,32 @@ Trong đó:
 - \( Y \): Giá trị độ xám tương ứng.
 
 ```python
-Image = cv2.imread('Meme.png')
+import os
+import cv2
+import numpy as np
 
-for Row in Image_3x3:
-    Pixel = Image[Row] * numpy.array([0.114, 0.587, 0.299])
-    Pixel.sum()
-    print(Row)
+Image = cv2.imread(os.path.join('Images_Folder','Meme.png'))
+
+print("Kích thước ảnh gốc:", Image.shape)
+
+Gray_Image = np.zeros((Image.shape[0], Image.shape[1])) # Tạo ma trận 0 bằng kích thước với ma trận xuất ra từ hình ảnh
+
+for Row in range(Image.shape[0]): # chạy qua các hàng
+    for Col in range(Image.shape[1]): # chạy qua các cột
+        Pixel = Image[Row, Col]  # Lấy các giá trị Pixel của định dạng BRG
+        Gray_Pixel = Pixel[0] * 0.114 + Pixel[1] * 0.587 + Pixel[2] * 0.299 # Chuyển sang Pixel của ảnh định dạng Gray
+        Gray_Image[Row, Col] = Gray_Pixel # Thêm các giá trị vào ảnh Gray
+        
+print(Gray_Image)
 ```
+Khi lấy ra ma trận $\ 3 \times 3$ nó sẽ có dạng:
+
+```python
+Gray_Image_3x3 = Gray_Image[0:3, 0:3]
+for row in Gray_Image_3x3:
+    print(row)
+```
+
 Vì mặc định của thư viện OpenCV khi đọc ảnh là ở định đạng màu **BGR** nên ta phải nhân tương ứng với vector:
 
 Ở điểm ảnh đầu tiên:
@@ -150,9 +190,9 @@ Sau khi chạy code thì sẽ ra ma trận $3 \times 3$ như sau:
 
 |    | x1    | x2    | x3    |
 |----|-------|-------|-------|
-| y1 | 117   | 117   | 117   |
-| y2 | 117   | 117   | 117   |
-| y3 | 117   | 117   | 117   |
+| y1 |116.964|116.964| 116.964|
+| y2 |116.964|116.964| 116.964|
+| y3 |116.964|116.964| 116.964|
 
 ### 3. Ma Trận Ảnh Xám
 Kết quả của quá trình chuyển đổi này là một ma trận hai chiều (2D) với kích thước $\ H  \times W$. Mỗi giá trị trong ma trận này đại diện cho độ xám của pixel tại vị trí tương ứng.
@@ -186,16 +226,24 @@ $$
 \text{giá trị chuẩn hóa} = \frac{\text{giá trị pixel}}{255}
 $$
 
+Lấy ma trận $3 \times 3$ từ hình ảnh để tính:
+```python
+
+```
+
+
 ```python
 def Convert_Image_To_Matrix(Image_Name):
     if Image_Name in os.listdir('Images_Folder'):
         Image = cv2.imread(os.path.join('Images_Folder', Image_Name))
-        Gray_Image = cv2.cvtColor(Image, cv2.COLOR_BGR2GRAY)
+        Gray_Image = cv2.cvtColor(Image, cv2.COLOR_BGR2GRAY) # Chuyển sang ảnh xám
         Data = np.array(Gray_Image)/255 # Chuẩn hóa dữ liệu
+        Image_Show(Gray_Image)
         return Data
     else: print("Picture not found!!!!")
 ```
-
-
+```python
+Convert_Image_To_Matrix('Meme.png')
+```
 
 
