@@ -106,7 +106,7 @@ def Convert_Image_To_Matrix(Image_Name):
 Convert_Image_To_Matrix('Meme.png')
 ```
 
-![png](Markdown/Output_1.png)
+![png](Markdown_Folder/Output_1.png)
 
 ## Giải Thích Về Chuyển Đổi Hình Ảnh Sang Ảnh Xám Và Chuẩn Hóa Dữ Liệu.
 
