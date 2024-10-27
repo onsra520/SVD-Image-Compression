@@ -301,9 +301,11 @@ $$
 
 ## Tính Singular Value Decomposition
 Để tính được Singular Value Decomposition ta cần 3 phần tử và cũng là 3 ma trận riêng biệt:
+
 $$
     \mathbf{A} = \mathbf{U\Sigma V^\mathsf{T}}
 $$
+
 - $\mathbf U$: Đây là ma trận trực giao(orthogonal matrix) kích thước $m \times m$. Chứa *Eigenvector* của $\mathbf{AA^\mathsf{T}}$.
 - $\mathbf \Sigma$: Đây là ma trận đường chéo (diagonal matrix) kích thước $m \times n$. Các giá trị trên đường chéo được ký hiệu là $\sigma_i$ và được gọi là *singular values* của $\mathbf A$.
 - $\mathbf V^\mathsf{T}$: Đây là ma trận trực giao chuyển vị (transposed orthogonal matrix) kích thước $n \times n$. Chứa *Eigenvector* của $\mathbf{A^\mathsf{T}A}$.
@@ -350,9 +352,9 @@ $$
 $$
     \mathbf{P - \lambda I} =
     \begin{pmatrix}
-    0.06689 - \lambda & 0.0767         & 0.0864         \\
-    0.335             & 0.373 - \lambda & 0.418          \\
-    0.636             & 0.694           & 0.754 - \lambda
+    0.06689 - \lambda   & 0.0767            & 0.0864 \\
+    0.335               & 0.373 - \lambda   & 0.418 \\
+    0.636               & 0.694             & 0.754 - \lambda
     \end{pmatrix}       
 $$
 
