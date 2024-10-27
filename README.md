@@ -381,14 +381,12 @@ Tiếp theo, ta sẽ thay từng **Eigenvalue** vào $(\mathbf{P - \lambda I})  
 
 Trong đó: 
 $
-    \quad
     \mathbf{v}=
     \begin{pmatrix}
     \mathbf{x_1}\\
     \mathbf{x_2}\\
     \mathbf{x_3}\\
     \end{pmatrix}
-    \quad
 $ 
 là **Eigenvector** cần tìm.
 
