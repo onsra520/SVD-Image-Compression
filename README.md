@@ -477,9 +477,11 @@ $$
 $$
 
 Trong đó:
+
 $$
 \quad \sigma_1 \geq \sigma_2 \geq \ldots \geq \sigma_n \geq 0\
 $$
+
 - **n** là số hạng không bằng không, hoặc số hạng không tầm thường trong ma trận.
 
 ### Ý nghĩa của các **Singular Values**
