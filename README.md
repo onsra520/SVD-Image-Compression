@@ -422,6 +422,7 @@ $$
     0.636\cdot&\mathbf{x_1}\quad ​+ &0.694\cdot&\mathbf{x_2}\quad − ​&0.45160426\cdot&\mathbf{x_3}\quad = 0 \\
     \end{aligned}
 $$
+
 Giải hệ phương trình ta được: $\quad\begin{aligned}\mathbf{x_1} = -0.09841821,\quad\mathbf{x_2} = -0.47783762,\quad\mathbf{x_3} = -0.87291756\quad\end{aligned}$
     
 - #### Với  $\lambda_2 = −0.00123017$:
