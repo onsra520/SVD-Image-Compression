@@ -292,7 +292,7 @@ $$
 | y2 | $\frac{85.468}{255}$| $\frac{95.171}{255}$| $\frac{106.779}{255}$|
 | y3 | $\frac{162.292}{255}$| $\frac{177.031}{255}$| $\frac{192.719}{255}$|
 
-**Kết quả cuối cùng**
+**Kết quả cuối cùng**:
 |    | x1       | x2       | x3       |
 |----|----------|----------|----------|
 | y1 | 0.06689  | 0.0767   | 0.0864   |
@@ -322,10 +322,114 @@ def Find_Eigenvalues_and_Eigenvectors(self, Matrix):
 
 ### Tính Eigenvalues và Eigenvectors:
 
-**Ta có ma trận $3 \times 3$ sau khi chuyển sang giá trị xám và chuẩn hóa:**
+Để tìm các **Eigenvalues** **$\lambda$**, ta cần giải phương trình đặc trưng:
 
-||||
-|-|-|-|
-| 0.06689 | 0.0767  | 0.0864  |
-| 0.335   | 0.373   | 0.418   |
-| 0.636   | 0.694   | 0.754   |
+$$
+    \det
+    \begin{pmatrix}
+    \mathbf{P - \lambda I} 
+    \end{pmatrix}= 0
+$$
+
+Với ma trận **$\mathbf{P}$** đã chuẩn hóa:
+
+$$
+    \mathbf{P - \lambda I} =
+    \left(\begin{array}{cc}
+    0.06689 & 0.0767  & 0.0864  \\
+    0.335   & 0.373   & 0.418   \\
+    0.636   & 0.694   & 0.754  
+    \end{array}\right)
+    -\lambda \left(\begin{array}{cc}
+    1   & 0 & 0  \\
+    0   & 1 & 0   \\
+    0   & 0 & 1  
+    \end{array}\right)        
+$$
+
+$$
+    \mathbf{P - \lambda I} =
+    \begin{pmatrix}
+    0.06689 - \lambda & 0.0767         & 0.0864         \\
+    0.335             & 0.373 - \lambda & 0.418          \\
+    0.636             & 0.694           & 0.754 - \lambda
+    \end{pmatrix}       
+$$
+
+
+**Giải phương trình:**
+
+
+$$
+    \det
+    \begin{pmatrix}
+    0.06689 - \lambda & 0.0767         & 0.0864         \\
+    0.335             & 0.373 - \lambda & 0.418          \\
+    0.636             & 0.694           & 0.754 - \lambda
+    \end{pmatrix}
+    = 0
+$$
+
+Sau khi giải phương trình bậc 3 này, ta sẽ tìm được các **Eigenvalues** $\lambda_1, \lambda_2, \lambda_3$.  
+
+$$
+    \lambda_1 = 1.20560426,\quad \lambda_2 = -0.00123017,\quad \lambda_3 = -0.0104841
+$$
+
+
+Tiếp theo, ta sẽ thay từng **Eigenvalue** vào $(\mathbf{P - \lambda I})  \mathbf{v} = 0$ để tìm **Eigenvectors** tương ứng.
+
+Trong đó: $\quad\mathbf{v}=\begin{pmatrix}\mathbf{x_1} \\\mathbf{x_2} \\\mathbf{x_3} \\\end{pmatrix}\quad$ là vector riêng cần tìm.
+
+- #### Với  $\lambda_1 = 1.20560426$ thay vào $(\mathbf{P - \lambda I})  \mathbf{v} = 0$ ta được:
+
+$$
+    \begin{pmatrix}
+    −1.13871426 & 0.0767         & 0.0864         \\
+    0.335             & −0.83260426 & 0.418          \\
+    0.636             & 0.694           & −0.45160426 \\
+    \end{pmatrix}
+    \begin{pmatrix}\mathbf{x_1} \\\mathbf{x_2} \\\mathbf{x_3} \\\end{pmatrix}= 
+    \begin{pmatrix}0 \\0 \\ 0 \\\end{pmatrix}  
+$$
+  
+#### Lập hệ phương trình tuyến tính từ phép nhân ma trận:  
+
+$$
+    \begin{aligned}
+    −1.13871426\cdot&\mathbf{x_1} ​+ &0.0767\cdot&\mathbf{x_2} ​+ &0.0864\cdot&\mathbf{x_3} = 0 ​\\
+    0.335\cdot&\mathbf{x_1} ​+ &0.83260426\cdot&\mathbf{x_2} ​+ &0.418\cdot&\mathbf{x_3} = 0 \\
+    0.636\cdot&\mathbf{x_1} ​+ &0.694\cdot&\mathbf{x_2}  ​−​&0.45160426\cdot&\mathbf{x_3} = 0 \\
+    \end{aligned}
+$$
+Giải hệ phương trình ta được: $\quad\begin{aligned}\mathbf{x_1} = -0.09841821,\quad\mathbf{x_2} = -0.47783762,\quad\mathbf{x_3} = -0.87291756\quad\end{aligned}$
+    
+- #### Với  $\lambda_2 = −0.00123017$:
+
+$$
+    \begin{aligned}
+    \mathbf{x_1} = -0.47083932,\quad
+    \mathbf{x_2} = 0.81054406,\quad
+    \mathbf{x_3} = -0.34832264\quad
+    \end{aligned}
+$$
+
+- #### Với  $\lambda_3 = -0.0104841$:
+
+$$
+    \begin{aligned}
+    \mathbf{x_1} = -0.20082236,\quad
+    \mathbf{x_2} = -0.63637886,\quad
+    \mathbf{x_3} = 0.7447767\quad
+    \end{aligned}
+$$
+
+#### Ta tìm được **Eigenvectors** - một ma trận $n \times n$ mà mỗi cột tương ứng với một **Eigenvector** của một **Eigenvalue**.
+
+$$
+    \begin{pmatrix}
+    -0.09841821 & -0.47083932 & -0.20082236 \\
+    -0.47783762 &  0.81054406 & -0.63637886 \\
+    -0.87291756 & -0.34832264 &  0.7447767
+    \end{pmatrix}
+$$
