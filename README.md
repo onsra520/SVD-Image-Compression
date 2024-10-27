@@ -397,8 +397,15 @@ $$
     0.335             & −0.83260426 & 0.418          \\
     0.636             & 0.694           & −0.45160426 \\
     \end{pmatrix}
-    \begin{pmatrix}\mathbf{x_1} \\\mathbf{x_2} \\\mathbf{x_3} \\\end{pmatrix}= 
-    \begin{pmatrix}0 \\0 \\ 0 \\\end{pmatrix}  
+    \begin{pmatrix}
+    \mathbf{x_1} \\
+    \mathbf{x_2} \\
+    \mathbf{x_3} \\
+    \end{pmatrix}
+    = 
+    \begin{pmatrix}
+    0 \\0 \\ 0 \\
+    \end{pmatrix}  
 $$
   
 #### Lập hệ phương trình tuyến tính từ phép nhân ma trận:  
