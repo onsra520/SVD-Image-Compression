@@ -40,15 +40,92 @@ Ba phép biến đổi này giúp ta hiểu rõ hơn về cách mà SVD làm tha
 
 # Singular Value Decomposition (SVD) and Its Applications
 
-## Tạo các Folder cần thiết cho Image Compression.
+## Import các thư viện và tạo các Folder cần thiết cho Image Compression.
 
 ```python
 import os
-
-Root = os.getcwd()
-os.makedirs('Images_Folder', exist_ok=True)
-os.makedirs('Result_Folder', exist_ok=True)
+import numpy as np
+import cv2
+from PIL import Image
 ```
+    os.makedirs('Images_Folder', exist_ok=True)
+    os.makedirs('Result_Folder', exist_ok=True)
+
+## Class và Define liên quan đến Image Compression
+
+```python
+class SVD_Image_Compression_Proccessing:
+    def __init__(self, Image_Name, Matrix_Approximation):
+        self.Original_Matrix = self.Convert_Image_To_Matrix(Image_Name)
+        self.K = Matrix_Approximation
+        self.Shape = np.shape(self.Original_Matrix)
+        Result = self.Singular_Value_Decomposition()
+        self.Show_Image(Result)
+
+    def Convert_to_PNG(self):
+        for Image_File in os.listdir("Images_Folder"):
+            if not Image_File.endswith(".png"):
+                New_Image_File = os.path.splitext(Image_File)[0] + ".png"
+                os.rename(
+                    os.path.join("Images_Folder", Image_File),
+                    os.path.join("Images_Folder", New_Image_File),
+                )
+
+    def Convert_Image_To_Matrix(self, Image_Name):
+        self.Convert_to_PNG() 
+        if Image_Name in os.listdir('Images_Folder'):
+            print("Found the picture:", Image_Name)
+            Image = cv2.imread(os.path.join('Images_Folder', Image_Name))
+            Gray_Image = np.zeros((Image.shape[0], Image.shape[1]))
+            for Row in range(Image.shape[0]):
+                for Col in range(Image.shape[1]):
+                    Pixel = Image[Row, Col]
+                    Gray_Pixel = Pixel[0] * 0.114 + Pixel[1] * 0.587 + Pixel[2] * 0.299
+                    Normalization = Gray_Pixel / 255
+                    Gray_Image[Row, Col] = Normalization
+            return Gray_Image
+        else:
+            print("Picture not found!!!!")  
+    
+    def Find_Eigenvalues_and_Eigenvectors(self, Matrix):
+        Eigenvalues, Eigenvectors = np.linalg.eig(Matrix)
+        return Eigenvalues, Eigenvectors
+
+    def Sigma_Matrix(self, Matrix):
+        Singular_Values = np.sqrt(np.abs(self.Find_Eigenvalues_and_Eigenvectors(Matrix)[0]))
+        D = np.zeros(self.Shape, dtype='float_')
+        for i in range(min(len(Singular_Values), self.Shape[0], self.Shape[1])):
+            D[i, i] = Singular_Values[i]
+        return D
+    
+    def Singular_Value_Decomposition(self):
+        A = self.Original_Matrix
+        AtA = np.matmul(A.T, A)
+        V = self.Find_Eigenvalues_and_Eigenvectors(AtA)[1]
+        D = self.Sigma_Matrix(AtA)
+        U = np.zeros((self.Shape[0], self.K), dtype='float_')
+        
+        for i in range(self.K):
+            U[:, i] = np.matmul(A, V[:, i]) / D[i, i]
+        Result = np.matmul(U[:, :self.K], D[:self.K, :self.K]) @ V[:, :self.K].T
+        
+        return Result
+
+    def Show_Image(self, Result):
+        Img_Array = np.clip(Result * 255, 0, 255).astype(np.uint8)
+        if not os.path.exists('Result_Folder'):
+            os.makedirs('Result_Folder')
+        Filename = f"{self.K}_SVD_Image_Compression.jpg"
+        cv2.imwrite(os.path.join('Result_Folder', Filename), Img_Array)
+
+        Img = Image.fromarray(Img_Array)
+        Img.show()
+
+if __name__ == '__main__':
+    SVD_Image_Compression_Proccessing('Cute Cat.png', 40)
+
+```
+
 
 ## Chuyển đổi định dạng ảnh sang PNG
 
@@ -63,54 +140,43 @@ os.makedirs('Result_Folder', exist_ok=True)
 Tuy nhiên, với hình ảnh phức tạp, nhiều màu sắc, định dạng JPEG có thể hiệu quả hơn trong việc giảm kích thước file nhờ nén có mất dữ liệu.
 
 ```python
-import os, glob
-
-Root = os.getcwd() # Lưu địa chỉ hiện tại của
-def Convert_to_PNG():
-   os.chdir(os.path.join(Root,'Images_Folder')) # Truy cập vào Folder con có tên là 'Images_Folder'
-   image_patterns = ["*.jpeg", "*.jpg"] # Các định dạng File cần chuyển sang PNG 
-   for pattern in image_patterns:
-      for image_file in glob.glob(pattern): # glob.glob() kiểm tra trong Folder có các ảnh có định dạng trong image_patterns   
-         if not image_file.endswith(".png"): # .endswith(".png") kiểm tra định dạng của ảnh
-               new_file = os.path.splitext(image_file)[0] + ".png" 
-               os.rename(image_file, new_file) # Đổi tên cho ảnh
-   os.chdir(Root) # Truy cập về lại Folder phụ huynh
+    def Convert_to_PNG(self):
+        for Image_File in os.listdir("Images_Folder"):
+            if not Image_File.endswith(".png"):
+                New_Image_File = os.path.splitext(Image_File)[0] + ".png"
+                os.rename(
+                    os.path.join("Images_Folder", Image_File),
+                    os.path.join("Images_Folder", New_Image_File),
+                )
 ```
 
 ## Image Compression
 
 SVD có thể rất hữu ích trong việc tìm kiếm các mối quan hệ quan trọng trong dữ liệu. Điều này có nhiều ứng dụng trong học máy, tài chính và khoa học dữ liệu. Một trong những ứng dụng của SVD là trong **image compression**. Mặc dù không có định dạng hình ảnh lớn nào sử dụng SVD do độ phức tạp tính toán của nó, SVD vẫn có thể được áp dụng trong các trường hợp khác như một cách để nén dữ liệu.
 
-```python
-import cv2
-import matplotlib.pyplot as plt
-
-# Đọc hình ảnh
-Image = cv2.imread(os.path.join('Images_Folder','Meme.png'))
-
-def Image_Show(Image):
-    # Hiển thị hình ảnh màu xám
-    plt.imshow(image, cmap='gray') # Thêm cmap='gray' để hiển thị đúng màu xám
-    plt.title('Cat Image') # Tắt trục tọa độ nếu không cần thiết
-    plt.show()
-
-def Convert_Image_To_Matrix(Image_Name):
-    if Image_Name in os.listdir('Images_Folder'):
-        Image = cv2.imread(os.path.join('Images_Folder', Image_Name))
-        Gray_Image = cv2.cvtColor(Image, cv2.COLOR_BGR2GRAY) # Chuyển đổi hình ảnh sang màu xám
-        Data = np.array(Gray_Image)/255 # Chuẩn hóa dữ liệu
-        Image_Show(Gray_Image)
-        return Data
-    else: print("Picture not found!!!!")
-
-Convert_Image_To_Matrix('Meme.png')
-```
-
-![png](Markdown_Folder/Output_1.png)
 
 ## Giải Thích Về Chuyển Đổi Hình Ảnh Sang Ảnh Xám Và Chuẩn Hóa Dữ Liệu.
 
 Khi bạn đọc một hình ảnh và chuyển nó thành ảnh xám, quá trình chuyển đổi không đơn giản là thay thế một ma trận 3x3 (mà bạn thấy khi đọc hình ảnh màu) bằng một ma trận 3x3 khác. Thay vào đó, đó là một quá trình xử lý hình ảnh bao gồm nhiều bước.
+
+```python
+def Convert_Image_To_Matrix(self, Image_Name):
+    self.Convert_to_PNG() 
+    if Image_Name in os.listdir('Images_Folder'):
+        print("Found the picture:", Image_Name)
+        Image = cv2.imread(os.path.join('Images_Folder', Image_Name))
+        Gray_Image = np.zeros((Image.shape[0], Image.shape[1]))
+        for Row in range(Image.shape[0]):
+            for Col in range(Image.shape[1]):
+                Pixel = Image[Row, Col]
+                Gray_Pixel = Pixel[0] * 0.114 + Pixel[1] * 0.587 + Pixel[2] * 0.299
+                Normalization = Gray_Pixel / 255
+                Gray_Image[Row, Col] = Normalization
+        return Gray_Image
+    else:
+        print("Picture not found!!!!") 
+```
+![png](Markdown_Folder/Output_1.png)
 
 ### 1. Đọc Hình Ảnh
 Khi bạn sử dụng `cv2.imread()` để đọc hình ảnh, OpenCV trả về một ma trận ba chiều (3D) với kích thước $\ H \times W \times 3$, trong đó:
@@ -122,19 +188,16 @@ Khi lấy ra ma trận $\ 3 \times 3$ nó sẽ có dạng:
 
 ```python
 import cv2
-
-Image = cv2.imread(os.path.join('Images_Folder','Meme.png'))
-Image_3x3 = Image[0:3, 0:3] # Lấy ra ma trận 3x3
-
-for row in Image_3x3:
-    print(row)
+Image = cv2.imread(os.path.join('Images_Folder','Cute Cat.png'))
+Image_3x3 = Image[0:3, 0:3]
+print(Image_3x3)
 ```
 Sau khi chạy đoạn code trên thì sẽ ra ma trận $3 \times 3$ với mỗi vị trí sẽ là **vector** với 3 hàng :
 |    | x1                | x2                | x3                |
 |----|-------------------|-------------------|-------------------|
-| y1 | [106, 115, 125]   | [106, 115, 125]   | [106, 115, 125]   |
-| y2 | [106, 115, 125]   | [106, 115, 125]   | [106, 115, 125]   |
-| y3 | [106, 115, 125]   | [106, 115, 125]   | [106, 115, 125]   |
+| y1 | [1, 8, 41]       | [1, 11, 45]      | [1, 13, 49]      |
+| y2 | [7, 20, 55]      | [11, 26, 62]     | [21, 35, 71]     |
+| y3 | [21, 40, 77]     | [26, 45, 82]     | [32, 50, 89]     |
 
 ### 2. Chuyển Đổi Sang Ảnh Xám
 Khi bạn chuyển đổi hình ảnh màu sang ảnh xám bằng `cv2.cvtColor(Image, cv2.COLOR_BGR2GRAY)`, OpenCV sử dụng công thức sau để tính giá trị độ xám cho mỗi pixel:
@@ -176,23 +239,23 @@ Vì mặc định của thư viện OpenCV khi đọc ảnh là ở định đ�
 
 Ở điểm ảnh đầu tiên:
 
-| B | G | R |
-|---|---|---| 
-|106|115|125|
+|B|G|R|
+|-|-|-| 
+|1|8|41|
 
 $Y = 0.114 \cdot B + 0.587 \cdot G + 0.299 \cdot R$
 
-$Y = 0.114 \cdot 106 + 0.587 \cdot 115 + 0.299 \cdot 125$
+$Y = 0.114 \cdot 1 + 0.587 \cdot 8 + 0.299 \cdot 41$
 
-$Y = 116.964$
+$Y = 17.069$
 
 Sau khi chạy code thì sẽ ra ma trận $3 \times 3$ như sau:
 
 |    | x1    | x2    | x3     |
 |----|-------|-------|--------|
-| y1 |116.964|116.964| 116.964|
-| y2 |116.964|116.964| 116.964|
-| y3 |116.964|116.964| 116.964|
+| y1 |17.069|19.557|22.053|
+| y2 |85.468|95.171|106.779|
+| y3 |162.292|177.031|192.719|
 
 ### 3. Ma Trận Ảnh Xám
 Kết quả của quá trình chuyển đổi này là một ma trận hai chiều (2D) với kích thước $\ H  \times W$. Mỗi giá trị trong ma trận này đại diện cho độ xám của pixel tại vị trí tương ứng.
@@ -242,36 +305,30 @@ for Row in range(Image.shape[0]): # chạy qua các hàng
 
 print(Gray_Image)
 ```
-Lấy ra ma trận $3 \times 3$ để kiểm tra:
+### Khi lấy ra ma trận $3 \times 3$ đã chuyển sang ảnh xám để kiểm tra:
 
-```python
-Gray_Image_3x3 = Gray_Image[0:3, 0:3]
-for row in Gray_Image_3x3:
-    print(row)
-```
-Ta thấy được từ ma trận ban đầu:
+**Ma trận ban đầu**
+|    | x1                | x2                | x3                |
+|----|-------------------|-------------------|-------------------|
+| y1 | 17.069            | 19.557            | 22.053            |
+| y2 | 85.468            | 95.171            | 106.779           |
+| y3 | 162.292           | 177.031           | 192.719           |
 
-|    | x1    | x2    | x3     |     
-|----|-------|-------|--------|
-| y1 |116.964|116.964| 116.964|
-| y2 |116.964|116.964| 116.964|
-| y3 |116.964|116.964| 116.964|
-
-Sau khi chia cho 225:
+**Ma trận sau khi chia cho 255**
 
 |    | x1                  | x2                  | x3                  |
 |----|---------------------|---------------------|---------------------|
-| y1 |$\frac{116.964}{255}$|$\frac{116.964}{255}$|$\frac{116.964}{255}$|
-| y2 |$\frac{116.964}{255}$|$\frac{116.964}{255}$|$\frac{116.964}{255}$|
-| y3 |$\frac{116.964}{255}$|$\frac{116.964}{255}$|$\frac{116.964}{255}$|
+| y1 | $\frac{17.069}{255}$| $\frac{19.557}{255}$| $\frac{22.053}{255}$|
+| y2 | $\frac{85.468}{255}$| $\frac{95.171}{255}$| $\frac{106.779}{255}$|
+| y3 | $\frac{162.292}{255}$| $\frac{177.031}{255}$| $\frac{192.719}{255}$|
 
-Kết quả là:
-
-|    | x1       | x2       | x3       |      
+**Kết quả cuối cùng**
+|    | x1       | x2       | x3       |
 |----|----------|----------|----------|
-| y1 |0.45868235|0.45868235|0.45868235|
-| y2 |0.45868235|0.45868235|0.45868235|
-| y3 |0.45868235|0.45868235|0.45868235|
+| y1 | 0.06689  | 0.0767   | 0.0864   |
+| y2 | 0.335    | 0.373    | 0.418    |
+| y3 | 0.636    | 0.694    | 0.754    |
+
 
 
 
