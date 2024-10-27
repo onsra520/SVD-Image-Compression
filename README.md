@@ -654,11 +654,12 @@ $$
 
 ### Chọn **Eigenvalues** từ **U** = $\mathbf A \mathbf A^\mathsf{T}$ khác gì khi chọn **Eigenvalues** từ **V** = $\mathbf A^\mathsf{T} \mathbf A$
 
-|Giống nhau|Khác nhau|
-|-|-|
-|Các **Eigenvalue** của $\mathbf A \mathbf A^\mathsf{T}$ và $\mathbf A^\mathsf{T} \mathbf A$ có cùng *tập hợp các giá trị*. $\\$Đều cung cấp bình phương của cùng các **Singular Values** $\sigma_1^2$.|Số lượng phần tử vì kích thước của $\mathbf A \mathbf A^\mathsf{T}$ và $\mathbf A^\mathsf{T} \mathbf A$ khác nhau. $\\\mathbf U = \mathbf A \mathbf A^\mathsf{T}$ là ma trận $m \times m \\\mathbf V = \mathbf A^\mathsf{T} \mathbf A$ là ma trận $n \times n$|
+| Giống nhau | Khác nhau |
+|------------|-----------|
+| Các **Eigenvalue** của $\mathbf{A} \mathbf{A}^\mathsf{T}$ và $\mathbf{A}^\mathsf{T} \mathbf{A}$ có cùng *tập hợp các giá trị*. <br> Đều cung cấp bình phương của cùng các **Singular Values** $\sigma_1^2$. | Số lượng phần tử vì kích thước của $\mathbf{A} \mathbf{A}^\mathsf{T}$ và $\mathbf{A}^\mathsf{T} \mathbf{A}$ khác nhau. <br> $\mathbf{U} = \mathbf{A} \mathbf{A}^\mathsf{T}$ là ma trận $m \times m$ <br> $\mathbf{V} = \mathbf{A}^\mathsf{T} \mathbf{A}$ là ma trận $n \times n$ |
 
 $\Rightarrow$ Có thể chọn **Eigenvalue** từ **U** = $\mathbf A \mathbf A^\mathsf{T}$ hoặc **V** = $\mathbf A^\mathsf{T} \mathbf A$
+
 
 
 
