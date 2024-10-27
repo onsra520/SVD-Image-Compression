@@ -333,7 +333,9 @@ $$
     \end{pmatrix}= 0
 $$
 
-Với ma trận **$\mathbf{P}$** đã chuẩn hóa:
+### Ví dụ với ma trận **$\mathbf{P}$** đã chuẩn hóa:
+
+#### Cách tính Eigenvectors và Eigenvectors:
 
 $$
     \mathbf{P - \lambda I} =
@@ -417,9 +419,9 @@ $$
 
 $$
     \begin{aligned}
-    −1.13871426\cdot&\mathbf{x_1}\quad ​+ &0.0767\cdot&\mathbf{x_2}\quad ​+ &0.0864\cdot&\mathbf{x_3}\quad= 0 ​\\
-    0.335\cdot&\mathbf{x_1}\quad ​+ &0.83260426\cdot&\mathbf{x_2}\quad ​+ &0.418\cdot&\mathbf{x_3}\quad = 0 \\
-    0.636\cdot&\mathbf{x_1}\quad ​+ &0.694\cdot&\mathbf{x_2}\quad − ​&0.45160426\cdot&\mathbf{x_3}\quad = 0 \\
+    −1.13871426\cdot\mathbf{x_1}\quad ​+ 0.0767\cdot\mathbf{x_2}\quad ​+ 0.0864\cdot\mathbf{x_3}\quad= 0 ​\\
+    0.335\cdot\mathbf{x_1}\quad ​+ 0.83260426\cdot\mathbf{x_2}\quad ​+ 0.418\cdot\mathbf{x_3}\quad = 0 \\
+    0.636\cdot\mathbf{x_1}\quad ​+ 0.694\cdot\mathbf{x_2}\quad − ​0.45160426\cdot\mathbf{x_3}\quad = 0 \\
     \end{aligned}
 $$
 
@@ -462,3 +464,5 @@ $$
     -0.87291756 & -0.34832264 &  0.7447767
     \end{pmatrix}
 $$
+
+
