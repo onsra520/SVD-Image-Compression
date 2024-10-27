@@ -34,9 +34,9 @@ Với SVD, chúng ta có thể diễn giải lại phép biến đổi tuyến t
 ---
 
 Ba phép biến đổi này giúp ta hiểu rõ hơn về cách mà SVD làm thay đổi dữ liệu thông qua các bước:  
-- Quay,
-- Co giãn,  
-- Và quay trong không gian.
+- Quay.
+- Co giãn 
+- Quay trong không gian.
 
 # Singular Value Decomposition (SVD) and Its Applications
 
@@ -126,7 +126,20 @@ if __name__ == '__main__':
 
 ```
 
+## Hàm khởi tạo của class
 
+```python
+def __init__(self, Image_Name, Matrix_Approximation):
+    self.Original_Matrix = self.Convert_Image_To_Matrix(Image_Name)
+    self.K = Matrix_Approximation
+    self.Shape = np.shape(self.Original_Matrix)
+    Result = self.Singular_Value_Decomposition()
+    self.Show_Image(Result)
+```
+1. Chuyển ảnh thành ma trận từ tệp ảnh được cung cấp.
+2. Lưu trữ kích thước của ma trận gốc.
+3. Thực hiện SVD để nén ảnh dựa trên số lượng thành phần kỳ dị 𝐾
+4. Hiển thị và lưu ảnh đã nén ra tệp.
 ## Chuyển đổi định dạng ảnh sang PNG
 
 ### Tại sao sử dụng ảnh định dạng PNG trong Image Compression?
@@ -208,33 +221,6 @@ Trong đó:
 - \( R, G, B \): Giá trị màu của từng pixel trong ba kênh màu.
 - \( Y \): Giá trị độ xám tương ứng.
 
-```python
-import os
-import cv2
-import numpy as np
-
-Image = cv2.imread(os.path.join('Images_Folder','Meme.png'))
-
-print("Kích thước ảnh gốc:", Image.shape)
-
-Gray_Image = np.zeros((Image.shape[0], Image.shape[1])) # Tạo ma trận 0 bằng kích thước với ma trận xuất ra từ hình ảnh
-
-for Row in range(Image.shape[0]): # chạy qua các hàng
-    for Col in range(Image.shape[1]): # chạy qua các cột
-        Pixel = Image[Row, Col]  # Lấy các giá trị Pixel của định dạng BRG
-        Gray_Pixel = Pixel[0] * 0.114 + Pixel[1] * 0.587 + Pixel[2] * 0.299 # Chuyển sang Pixel của ảnh định dạng Gray
-        Gray_Image[Row, Col] = Gray_Pixel # Thêm các giá trị vào ảnh Gray
-        
-print(Gray_Image)
-```
-Khi lấy ra ma trận $\ 3 \times 3$ nó sẽ có dạng:
-
-```python
-Gray_Image_3x3 = Gray_Image[0:3, 0:3]
-for row in Gray_Image_3x3:
-    print(row)
-```
-
 Vì mặc định của thư viện OpenCV khi đọc ảnh là ở định đạng màu **BGR** nên ta phải nhân tương ứng với vector:
 
 Ở điểm ảnh đầu tiên:
@@ -249,7 +235,7 @@ $Y = 0.114 \cdot 1 + 0.587 \cdot 8 + 0.299 \cdot 41$
 
 $Y = 17.069$
 
-Sau khi chạy code thì sẽ ra ma trận $3 \times 3$ như sau:
+Sau khi tính toán thì sẽ thu được ma trận $3 \times 3$ như sau:
 
 |    | x1    | x2    | x3     |
 |----|-------|-------|--------|
@@ -289,23 +275,7 @@ $$
 \text{giá trị chuẩn hóa} = \frac{\text{giá trị pixel}}{255}
 $$
 
-```python
-Image = cv2.imread(os.path.join('Images_Folder','Meme.png'))
-
-print("Kích thước ảnh gốc:", Image.shape)
-
-Gray_Image = np.zeros((Image.shape[0], Image.shape[1])) # Tạo ma trận 0 bằng kích thước với ma trận xuất ra từ hình ảnh
-
-for Row in range(Image.shape[0]): # chạy qua các hàng
-    for Col in range(Image.shape[1]): # chạy qua các cột
-        Pixel = Image[Row, Col]  # Lấy các giá trị Pixel của định dạng BRG
-        Gray_Pixel = Pixel[0] * 0.114 + Pixel[1] * 0.587 + Pixel[2] * 0.299 # Chuyển sang Pixel của ảnh định dạng Gray
-        Normalization = Gray_Pixel / 255 # Chuẩn hóa dữ liệu của mỗi Pixel bằng cách chia cho 255
-        Gray_Image[Row, Col] = Normalization # Thêm các giá trị vào ảnh Gray
-
-print(Gray_Image)
-```
-### Khi lấy ra ma trận $3 \times 3$ đã chuyển sang ảnh xám để kiểm tra:
+### Lấy ra ma trận $3 \times 3$ đã chuyển sang ảnh xám để tính:
 
 **Ma trận ban đầu**
 |    | x1                | x2                | x3                |
@@ -329,11 +299,33 @@ print(Gray_Image)
 | y2 | 0.335    | 0.373    | 0.418    |
 | y3 | 0.636    | 0.694    | 0.754    |
 
+## Tính Singular Value Decomposition
+Để tính được Singular Value Decomposition ta cần 3 phần tử và cũng là 3 ma trận riêng biệt:
+$$
+    \mathbf{A} = \mathbf{U\Sigma V^\mathsf{T}}
+$$
+- $\mathbf U$: Đây là ma trận trực giao(orthogonal matrix) kích thước $m \times m$. Chứa *Eigenvector* của $\mathbf{AA^\mathsf{T}}$.
+- $\mathbf \Sigma$: Đây là ma trận đường chéo (diagonal matrix) kích thước $m \times n$. Các giá trị trên đường chéo được ký hiệu là $\sigma_i$ và được gọi là *singular values* của $\mathbf A$.
+- $\mathbf V^\mathsf{T}$: Đây là ma trận trực giao chuyển vị (transposed orthogonal matrix) kích thước $n \times n$. Chứa *Eigenvector* của $\mathbf{A^\mathsf{T}A}$.
 
+## Eigenvalues và Eigenvectors
 
+Dùng thư viện numpy để tính *Eigenvalues* và *Eigenvectors* của ma trận vuông
 
+> **linalg.eig()** -> Trả về một tuple gồm một mảng chứa *Eigenvalues* và một ma trận chứa các *Eigenvectors* tương ứng.
 
+```python
+def Find_Eigenvalues_and_Eigenvectors(self, Matrix):
+    Eigenvalues, Eigenvectors = np.linalg.eig(Matrix)
+    return Eigenvalues, Eigenvectors
+```
 
+### Tính Eigenvalues và Eigenvectors:
 
+**Ta có ma trận $3 \times 3$ sau khi chuyển sang giá trị xám và chuẩn hóa:**
 
-
+||||
+|-|-|-|
+| 0.06689 | 0.0767  | 0.0864  |
+| 0.335   | 0.373   | 0.418   |
+| 0.636   | 0.694   | 0.754   |
