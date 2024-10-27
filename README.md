@@ -634,7 +634,7 @@ $$
 **Eigenvalue** của ma trận **V** = $\mathbf A^\mathsf{T} \mathbf A$:
 
 $$
-    \lambda_1 = 2.86441422e+03,\quad \lambda_2 = 5.58578432e+00,\quad \lambda_3 = -4.67578995e-14,\quad \lambda_4 = 1.22637131e-15
+    \lambda_1 = 2.86441422e+03,\quad \lambda_2 = 5.58578432e+00,\quad \lambda_3 = 1.90476307e-13,\quad \lambda_4 = 4.92313283e-14
 $$
 
 Ma trận **Σ** có kích thước $m \times n$:
@@ -646,11 +646,33 @@ $$
     \begin{pmatrix}
     \sqrt 2.86441422e+03 & 0 & 0 & 0 \\
     0 & \sqrt 5.58578432e+00 & 0 & 0 \\
-    0 & 0 & \sqrt -4.67578995e-14 & 0 \\
-    0 & 0 & 0 & \sqrt 1.22637131e-15 \\
+    0 & 0 & \sqrt 1.90476307e-13 & 0 \\
+    0 & 0 & 0 & \sqrt 4.92313283e-14 \\
     0 & 0 & 0 & 0
     \end{pmatrix}
 $$
+
+### Chọn **Eigenvalues** từ **U** = $\mathbf A \mathbf A^\mathsf{T}$ khác gì khi chọn **Eigenvalues** từ **V** = $\mathbf A^\mathsf{T} \mathbf A$
+
+|Giống nhau|Khác nhau|
+|-|-|
+|Các **Eigenvalue** của $\mathbf A \mathbf A^\mathsf{T}$ và $\mathbf A^\mathsf{T} \mathbf A$ có cùng *tập hợp các giá trị*. $\\$Đều cung cấp bình phương của cùng các **Singular Values** $\sigma_1^2$.|Số lượng phần tử vì kích thước của $\mathbf A \mathbf A^\mathsf{T}$ và $\mathbf A^\mathsf{T} \mathbf A$ khác nhau. $\\\mathbf U = \mathbf A \mathbf A^\mathsf{T}$ là ma trận $m \times m \\\mathbf V = \mathbf A^\mathsf{T} \mathbf A$ là ma trận $n \times n$|
+
+$\Rightarrow$ Có thể chọn **Eigenvalue** từ **U** = $\mathbf A \mathbf A^\mathsf{T}$ hoặc **V** = $\mathbf A^\mathsf{T} \mathbf A$
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ### Tính ma trận **U** và **V**
 
