@@ -381,7 +381,8 @@ Tiếp theo, ta sẽ thay từng **Eigenvalue** vào $(\mathbf{P - \lambda I})  
 
 Trong đó: **Eigenvector** cần tìm là 
 $
-    \mathbf{v}=
+    \mathbf{v}
+    =
     \begin{pmatrix}
     \mathbf{x_1} \\
     \mathbf{x_2} \\
