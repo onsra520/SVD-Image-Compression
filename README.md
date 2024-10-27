@@ -478,9 +478,9 @@ $$
 
 Trong đó:
 
-$
+$$
 \quad \sigma_1 \geq \sigma_2 \geq \ldots \geq \sigma_n \geq 0\
-$
+$$
 
 - **n** là số hạng không bằng không, hoặc số hạng không tầm thường trong ma trận.
 
@@ -491,4 +491,74 @@ $
 - **Biểu diễn kích thước**: Các giá trị này cho phép chúng ta hiểu được cấu trúc của ma trận, từ đó có thể phân tích và biểu diễn dữ liệu.
 
 - **Giảm chiều (Dimensionality Reduction)**: SVD được sử dụng trong các kỹ thuật như PCA (Principal Component Analysis) để giảm chiều dữ liệu. Bằng cách giữ lại các giá trị đặc biệt lớn nhất và loại bỏ những cái nhỏ, chúng ta có thể giảm số chiều mà vẫn giữ được thông tin quan trọng.
+
+```python
+def Sigma_Matrix(self, Matrix):
+    Singular_Values = np.sqrt(np.abs(self.Find_Eigenvalues_and_Eigenvectors(Matrix)[0]))
+    Sigma_Matrix = np.zeros(self.Shape, dtype='float_')
+    for i in range(min(len(Singular_Values), self.Shape[0], self.Shape[1])):
+        Sigma_Matrix[i, i] = Singular_Values[i]
+    return Sigma_Matrix
+```
+
+Cách hoạt động của hàm `Sigma_Matrix()` như sau:
+
+1. Tính căn bậc hai của **Eigenvalues** của ma trận **$\mathbf U$** hoặc **$\mathbf V$** để tìm **Singular Values**.
+2. Tạo ma trận **Σ** (ma trận đường chéo) chứa các giá trị kỳ dị.
+
+Ví dụ ta có 1 ma trận **A** với kích thước là $5 \times 4$
+
+$$
+    \mathbf A =
+    \begin{pmatrix}
+    1 & 2 & 3 & 4 \\
+    5 & 6 & 7 & 8 \\
+    9 & 10 & 11 & 12 \\
+    13 & 14 & 15 & 16 \\
+    17 & 18 & 19 & 20 \\
+    \end{pmatrix}
+$$
+
+Tính ma trận **U** = $\mathbf A \mathbf A^\mathsf{T}$
+
+$$
+    \mathbf A \mathbf A^\mathsf{T} = 
+    \begin{pmatrix}
+    1 & 2 & 3 & 4 \\
+    5 & 6 & 7 & 8 \\
+    9 & 10 & 11 & 12 \\
+    13 & 14 & 15 & 16 \\
+    17 & 18 & 19 & 20 \\
+    \end{pmatrix}
+    \begin{pmatrix}
+    1 & 5 & 9 & 13 & 17 \\
+    2 & 6 & 10 & 14 & 18 \\
+    3 & 7 & 11 & 15 & 19 \\
+    4 & 8 & 12 & 16 & 20 \\
+    \end{pmatrix}
+$$
+
+Kết quả phép nhân ma trận sẽ là ma trận **U** có kích thước $5 \times 5$:
+
+$$
+    \mathbf A \mathbf A^\mathsf{T} = 
+    \begin{pmatrix}
+    30 & 70 & 110 & 150 & 190 \\
+    70 & 174 & 278 & 382 & 486 \\
+    110 & 278 & 446 & 614 & 782 \\
+    150 & 382 & 614 & 846 & 1078 \\
+    190 & 486 & 782 & 1078 & 1374 \\
+    \end{pmatrix}
+$$
+
+**Eigenvalue** của ma trận **U** = $\mathbf A \mathbf A^\mathsf{T}$:
+
+$$
+    \lambda_1 = 2.86441422e+03,\quad \lambda_2 = 5.58578432e+00,\quad \lambda_3 = -4.67578995e-14,\quad \lambda_4 = 1.22637131e-15,\quad \lambda_5 = -9.35600838e-16
+$$
+
+Tính ma trận **V** = $\mathbf A^\mathsf{T} \mathbf A$
+
+
+
 
