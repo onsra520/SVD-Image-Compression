@@ -381,16 +381,15 @@ $$
 
 Tiếp theo, ta sẽ thay từng **Eigenvalue** vào $(\mathbf{P - \lambda I})  \mathbf{v} = 0$ để tìm **Eigenvectors** tương ứng.
 
-Trong đó: **Eigenvector** cần tìm là 
-
-$$
+Trong đó **Eigenvector** cần tìm là:
+$
     \mathbf{v} =
     \begin{pmatrix}
     \mathbf{x_1} \\
     \mathbf{x_2} \\
     \mathbf{x_3} \\
     \end{pmatrix}
-$$
+$
 
 - #### Với  $\lambda_1 = 1.20560426$ thay vào $(\mathbf{P - \lambda I})  \mathbf{v} = 0$ ta được:
 
