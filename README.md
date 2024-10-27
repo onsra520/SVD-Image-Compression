@@ -482,7 +482,7 @@ $
 $
 - **n** là số hạng không bằng không, hoặc số hạng không tầm thường trong ma trận.
 
-### Ý nghĩa của các giá trị đặc biệt (Singular Values)
+### Ý nghĩa của các **Singular Values**
 
 - **Độ lớn**: Các giá trị đặc biệt thể hiện độ lớn của các thành phần trong không gian. Giá trị lớn hơn nghĩa là thành phần đó đóng góp nhiều hơn vào ma trận gốc.
 
