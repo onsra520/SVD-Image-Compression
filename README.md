@@ -404,7 +404,9 @@ $$
     \end{pmatrix}
     = 
     \begin{pmatrix}
-    0 \\0 \\ 0 \\
+    0 \\
+    0 \\ 
+    0 \\
     \end{pmatrix}  
 $$
   
