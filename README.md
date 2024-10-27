@@ -390,7 +390,7 @@ $
     \end{pmatrix}
     \quad
 $ 
-là vector riêng cần tìm.
+là **Eigenvector** cần tìm.
 
 - #### Với  $\lambda_1 = 1.20560426$ thay vào $(\mathbf{P - \lambda I})  \mathbf{v} = 0$ ta được:
 
