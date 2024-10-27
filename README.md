@@ -519,7 +519,9 @@ $$
     \end{pmatrix}
 $$
 
-Tính ma trận **U** = $\mathbf A \mathbf A^\mathsf{T}$
+---
+
+### Tính ma trận **U** = $\mathbf A \mathbf A^\mathsf{T}$
 
 $$
     \mathbf A \mathbf A^\mathsf{T} = 
@@ -557,8 +559,139 @@ $$
     \lambda_1 = 2.86441422e+03,\quad \lambda_2 = 5.58578432e+00,\quad \lambda_3 = -4.67578995e-14,\quad \lambda_4 = 1.22637131e-15,\quad \lambda_5 = -9.35600838e-16
 $$
 
-Tính ma trận **V** = $\mathbf A^\mathsf{T} \mathbf A$
+**Eigenvectors** của ma trận **U** = $\mathbf A \mathbf A^\mathsf{T}$:
 
+$$
+    \begin{pmatrix}
+    -0.09654784 &  0.76855612 & -0.47716104 &  0.18582136 & -0.27376797 \\
+    -0.24551564 &  0.48961420 &  0.32759876 &  0.03539164 & -0.03585407 \\
+    -0.39448345 &  0.21067228 &  0.68166006 & -0.74154641 &  0.26304427 \\
+    -0.54345125 & -0.06826963 & -0.43747224 &  0.63363247 &  0.67654556 \\
+    -0.69241905 & -0.34721155 & -0.09462554 & -0.11329906 & -0.62996778
+    \end{pmatrix}
+$$
 
+---
 
+### Tính ma trận **V** = $\mathbf A^\mathsf{T} \mathbf A$
 
+$$
+    \mathbf A^\mathsf{T} \mathbf A = 
+    \begin{pmatrix}
+    1 & 5 & 9 & 13 & 17 \\
+    2 & 6 & 10 & 14 & 18 \\
+    3 & 7 & 11 & 15 & 19 \\
+    4 & 8 & 12 & 16 & 20 \\
+    \end{pmatrix}    
+    \begin{pmatrix}
+    1 & 2 & 3 & 4 \\
+    5 & 6 & 7 & 8 \\
+    9 & 10 & 11 & 12 \\
+    13 & 14 & 15 & 16 \\
+    17 & 18 & 19 & 20 \\
+    \end{pmatrix}
+$$
+
+Kết quả phép nhân ma trận sẽ là ma trận **U** có kích thước $5 \times 5$:   
+
+$$
+    \mathbf A^\mathsf{T} \mathbf A = 
+    \begin{pmatrix}
+    335 & 400 & 465 & 530 \\
+    400 & 480 & 560 & 640 \\
+    465 & 560 & 655 & 750 \\
+    530 & 640 & 750 & 860 \\
+    \end{pmatrix}
+$$
+
+**Eigenvalue** của ma trận **V** = $\mathbf A^\mathsf{T} \mathbf A$:
+
+$$
+    \lambda_1 = 2.86441422e+03,\quad \lambda_2 = 5.58578432e+00,\quad \lambda_3 = -4.67578995e-14,\quad \lambda_4 = 1.22637131e-15
+$$
+
+**Eigenvectors** của ma trận **V** = $\mathbf A^\mathsf{T} \mathbf A$:
+
+$$
+    \begin{pmatrix}
+    -0.09654784 &  0.76855612 & -0.47716104 &  0.18582136 \\
+    -0.24551564 &  0.48961420 &  0.32759876 &  0.03539164 \\
+    -0.39448345 &  0.21067228 &  0.68166006 & -0.74154641 \\
+    -0.54345125 & -0.06826963 & -0.43747224 &  0.63363247 \\
+    \end{pmatrix}
+$$
+
+---
+
+### Xây dựng **Ma trận Σ** từ **Singular Values**:
+
+- **Ma trận Σ** chứa các Singular Values $\sigma_i$ trên đường chéo chính.
+
+- Các **Singular Values** là căn bậc hai của **Eigenvalues** của **$\mathbf A \mathbf A^\mathsf{T}$** hoặc **$\mathbf A^\mathsf{T} \mathbf A$**.
+
+### Tính Singular Values $\sigma_i$
+
+**Eigenvalue** của ma trận **V** = $\mathbf A^\mathsf{T} \mathbf A$:
+
+$$
+    \lambda_1 = 2.86441422e+03,\quad \lambda_2 = 5.58578432e+00,\quad \lambda_3 = -4.67578995e-14,\quad \lambda_4 = 1.22637131e-15
+$$
+
+Ma trận **Σ** có kích thước $m \times n$:
+
+Với $\mathbf m$ là số hàng của **A** và $\mathbf n$ là số cột của **A**.
+
+$$
+    \Sigma = 
+    \begin{pmatrix}
+    \sqrt 2.86441422e+03 & 0 & 0 & 0 \\
+    0 & \sqrt 5.58578432e+00 & 0 & 0 \\
+    0 & 0 & \sqrt -4.67578995e-14 & 0 \\
+    0 & 0 & 0 & \sqrt 1.22637131e-15 \\
+    0 & 0 & 0 & 0
+    \end{pmatrix}
+$$
+
+### Tính ma trận **U** và **V**
+
+- **Ma trận U**: Các cột của **U** là các **Eigenvectors** của **$\mathbf A \mathbf A^\mathsf{T}$**.
+- **Ma trận V**: Các cột của **V** là các **Eigenvectors** của **$\mathbf A^\mathsf{T} \mathbf A$**.
+
+### Kết quả cuối cùng của SVD
+
+$$
+    \mathbf A = \mathbf{U \Sigma V^\mathsf{T}}
+$$
+
+Trong đó:
+
+$$
+    \mathbf U = 
+    \begin{pmatrix}
+    -0.09654784 &  0.76855612 & -0.47716104 &  0.18582136 & -0.27376797 \\
+    -0.24551564 &  0.48961420 &  0.32759876 &  0.03539164 & -0.03585407 \\
+    -0.39448345 &  0.21067228 &  0.68166006 & -0.74154641 &  0.26304427 \\
+    -0.54345125 & -0.06826963 & -0.43747224 &  0.63363247 &  0.67654556 \\
+    -0.69241905 & -0.34721155 & -0.09462554 & -0.11329906 & -0.62996778
+    \end{pmatrix}
+$$
+
+$$
+    \mathbf \Sigma = 
+    \begin{pmatrix}
+    53.515 & 0 & 0 & 0 \\
+    0 & 2.364 & 0 & 0 \\
+    0 & 0 & 0 & 0 \\
+    0 & 0 & 0 & 0 \\
+    \end{pmatrix}
+$$
+
+$$
+    \mathbf V^\mathsf{T} = 
+    \begin{pmatrix}
+    -0.09654784 & -0.24551564 & -0.39448345 & -0.54345125 \\
+    0.76855612 &  0.48961420 &  0.21067228 & -0.06826963 \\
+    -0.47716104 &  0.32759876 &  0.68166006 & -0.43747224 \\
+    0.18582136 &  0.03539164 & -0.74154641 &  0.63363247 \\
+    \end{pmatrix}
+$$
