@@ -299,16 +299,6 @@ $$
 | y2 | 0.335    | 0.373    | 0.418    |
 | y3 | 0.636    | 0.694    | 0.754    |
 
-## Tính Singular Value Decomposition
-Để tính được Singular Value Decomposition ta cần 3 phần tử và cũng là 3 ma trận riêng biệt:
-
-$$
-    \mathbf{A} = \mathbf{U\Sigma V^\mathsf{T}}
-$$
-
-- $\mathbf U$: Đây là ma trận trực giao(orthogonal matrix) kích thước $m \times m$. Chứa *Eigenvector* của $\mathbf{AA^\mathsf{T}}$.
-- $\mathbf \Sigma$: Đây là ma trận đường chéo (diagonal matrix) kích thước $m \times n$. Các giá trị trên đường chéo được ký hiệu là $\sigma_i$ và được gọi là *singular values* của $\mathbf A$.
-- $\mathbf V^\mathsf{T}$: Đây là ma trận trực giao chuyển vị (transposed orthogonal matrix) kích thước $n \times n$. Chứa *Eigenvector* của $\mathbf{A^\mathsf{T}A}$.
 
 ## Eigenvalues và Eigenvectors
 
@@ -465,4 +455,38 @@ $$
     \end{pmatrix}
 $$
 
+### Ma trận **Σ** từ các Singular Values
+
+Trong **Singular Value Decomposition** ma trận **Σ** chứa các **Singular Values** của ma trận gốc
+
+
+### Cấu trúc của ma trận Σ
+
+- **Ma trận Σ** là một ma trận chéo, nghĩa là chỉ có các phần tử nằm trên đường chéo chính là khác không, còn lại là **0**.
+  
+- Các phần tử trên đường chéo của **Σ** là các **Singular Values** của ma trận \( A \). Các giá trị này được sắp xếp theo thứ tự giảm dần:
+
+$$
+\Sigma = 
+\begin{pmatrix}
+\sigma_1 & 0 & \ldots & 0 \\
+0 & \sigma_2 & \ldots & 0 \\
+\vdots & \vdots & \ddots & \vdots \\
+0 & 0 & \ldots & \sigma_n \\
+\end{pmatrix}
+$$
+
+Trong đó:
+$
+\quad \sigma_1 \geq \sigma_2 \geq \ldots \geq \sigma_n \geq 0\
+$
+- **n** là số hạng không bằng không, hoặc số hạng không tầm thường trong ma trận.
+
+### Ý nghĩa của các giá trị đặc biệt (Singular Values)
+
+- **Độ lớn**: Các giá trị đặc biệt thể hiện độ lớn của các thành phần trong không gian. Giá trị lớn hơn nghĩa là thành phần đó đóng góp nhiều hơn vào ma trận gốc.
+
+- **Biểu diễn kích thước**: Các giá trị này cho phép chúng ta hiểu được cấu trúc của ma trận, từ đó có thể phân tích và biểu diễn dữ liệu.
+
+- **Giảm chiều (Dimensionality Reduction)**: SVD được sử dụng trong các kỹ thuật như PCA (Principal Component Analysis) để giảm chiều dữ liệu. Bằng cách giữ lại các giá trị đặc biệt lớn nhất và loại bỏ những cái nhỏ, chúng ta có thể giảm số chiều mà vẫn giữ được thông tin quan trọng.
 
