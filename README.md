@@ -382,22 +382,23 @@ $$
 Tiếp theo, ta sẽ thay từng **Eigenvalue** vào $(\mathbf{P - \lambda I})  \mathbf{v} = 0$ để tìm **Eigenvectors** tương ứng.
 
 Trong đó **Eigenvector** cần tìm là:
-$
+
+$$
     \mathbf{v} =
     \begin{pmatrix}
     \mathbf{x_1} \\
     \mathbf{x_2} \\
     \mathbf{x_3} \\
     \end{pmatrix}
-$
+$$
 
 - #### Với  $\lambda_1 = 1.20560426$ thay vào $(\mathbf{P - \lambda I})  \mathbf{v} = 0$ ta được:
 
 $$
     \begin{pmatrix}
-    −1.13871426 & 0.0767         & 0.0864         \\
-    0.335             & −0.83260426 & 0.418          \\
-    0.636             & 0.694           & −0.45160426 \\
+    −1.13871426 & 0.0767        & 0.0864    \\
+    0.335       & −0.83260426   & 0.418     \\
+    0.636       & 0.694         & −0.45160426
     \end{pmatrix}
     \begin{pmatrix}
     \mathbf{x_1} \\
