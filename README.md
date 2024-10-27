@@ -383,9 +383,9 @@ Trong đó: **Eigenvector** cần tìm là
 $
     \mathbf{v}=
     \begin{pmatrix}
-    \mathbf{x_1}\\
-    \mathbf{x_2}\\
-    \mathbf{x_3}\\
+    \mathbf{x_1} \\
+    \mathbf{x_2} \\
+    \mathbf{x_3} \\
     \end{pmatrix}
 $ 
 
