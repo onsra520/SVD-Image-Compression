@@ -58,9 +58,13 @@ class SVD_Image_Compression_Proccessing:
     def __init__(self, Image_Name, Matrix_Approximation):
         self.Original_Matrix = self.Convert_Image_To_Matrix(Image_Name)
         self.K = Matrix_Approximation
-        self.Shape = np.shape(self.Original_Matrix)
-        Result = self.Singular_Value_Decomposition()
-        self.Show_Image(Result)
+        if self.Original_Matrix is not False:
+            self.Shape = np.shape(self.Original_Matrix)
+            Result = self.Singular_Value_Decomposition()
+            self.Show_Image(Result)
+        else:
+            print(f"Picture not found!!!!")
+
 
     def Convert_to_PNG(self):
         for Image_File in os.listdir("Images_Folder"):
@@ -85,7 +89,7 @@ class SVD_Image_Compression_Proccessing:
                     Gray_Image[Row, Col] = Normalization
             return Gray_Image
         else:
-            print("Picture not found!!!!")  
+            return False
     
     def Find_Eigenvalues_and_Eigenvectors(self, Matrix):
         Eigenvalues, Eigenvectors = np.linalg.eig(Matrix)
@@ -93,17 +97,17 @@ class SVD_Image_Compression_Proccessing:
 
     def Sigma_Matrix(self, Matrix):
         Singular_Values = np.sqrt(np.abs(self.Find_Eigenvalues_and_Eigenvectors(Matrix)[0]))
-        D = np.zeros(self.Shape, dtype='float_')
+        Sigma_Matrix = np.zeros(self.Shape, dtype='float_')
         for i in range(min(len(Singular_Values), self.Shape[0], self.Shape[1])):
-            D[i, i] = Singular_Values[i]
-        return D
+            Sigma_Matrix[i, i] = Singular_Values[i]
+        return Sigma_Matrix
     
     def Singular_Value_Decomposition(self):
         A = self.Original_Matrix
         AtA = np.matmul(A.T, A)
-        V = self.Find_Eigenvalues_and_Eigenvectors(AtA)[1]
-        D = self.Sigma_Matrix(AtA)
         U = np.zeros((self.Shape[0], self.K), dtype='float_')
+        D = self.Sigma_Matrix(AtA)
+        V = self.Find_Eigenvalues_and_Eigenvectors(AtA)[1]
         
         for i in range(self.K):
             U[:, i] = np.matmul(A, V[:, i]) / D[i, i]
@@ -123,7 +127,6 @@ class SVD_Image_Compression_Proccessing:
 
 if __name__ == '__main__':
     SVD_Image_Compression_Proccessing('Cute Cat.png', 40)
-
 ```
 
 ## Hàm khởi tạo của class
@@ -629,6 +632,15 @@ $$
 
 - Các **Singular Values** là căn bậc hai của **Eigenvalues** của **$\mathbf A \mathbf A^\mathsf{T}$** hoặc **$\mathbf A^\mathsf{T} \mathbf A$**.
 
+```python
+def Sigma_Matrix(self, Matrix):
+    Singular_Values = np.sqrt(np.abs(self.Find_Eigenvalues_and_Eigenvectors(Matrix)[0]))
+    Sigma_Matrix = np.zeros(self.Shape, dtype='float_')
+    for i in range(min(len(Singular_Values), self.Shape[0], self.Shape[1])):
+        Sigma_Matrix[i, i] = Singular_Values[i]
+    return Sigma_Matrix
+```
+
 ### Tính Singular Values $\sigma_i$
 
 **Eigenvalue** của ma trận **V** = $\mathbf A^\mathsf{T} \mathbf A$:
@@ -751,7 +763,7 @@ $
     \\
 $
 
-Ví dụ với ma trận 
+Ví dụ ta lấy *$\mathbf{k}$* = 3 với ma trận 
 $
     \mathbf A =
     \begin{pmatrix}
@@ -762,4 +774,95 @@ $
     17 & 18 & 19 & 20 \\
     \end{pmatrix}
 $
-Ta đã tìm được $\mathbf U, \Sigma, \mathbf V^\mathsf{T}$
+Ta đã tìm được $\mathbf U, \Sigma, \mathbf V^\mathsf{T}$  . 
+
+- Với **$\Sigma_k$** :Giữ lại 3 *Singular Values* lớn nhất trong ma trận **$\Sigma$**. Ma trận **$\Sigma_3$** có kích thước là $3 \times 3$
+
+$$
+    \Sigma = 
+    \begin{pmatrix}
+    \sqrt 2.86441422e+03 & 0 & 0  \\
+    0 & \sqrt 5.58578432e+00 & 0  \\
+    0 & 0 & \sqrt 1.90476307e-13  \\
+    \end{pmatrix}
+$$
+
+- Với $\mathbf{U_k}$: Giữ lại 3 cột đầu tiên của ma trận **$\mathbf U$**. Ma trận **$\mathbf{U_3}$** có kích thước là $5 \times 3$
+$$
+    \mathbf{U_3} = 
+    \begin{pmatrix}
+    -0.09654784 &  0.76855612 & -0.47716104 \\
+    -0.24551564 &  0.48961420 &  0.32759876 \\
+    -0.39448345 &  0.21067228 &  0.68166006 \\
+    -0.54345125 & -0.06826963 & -0.43747224 \\
+    -0.69241905 & -0.34721155 & -0.09462554 
+    \end{pmatrix}
+$$
+
+- Với $\mathbf{V^\mathsf{T}_k}$: Giữ lại 3 hàng đầu tiên của ma trận **$\mathbf V^\mathsf{T}$**. $\mathbf{V^\mathsf{T}_3}$: có kích thước là $3 \times 4$
+
+$$
+    \mathbf V^\mathsf{T}_3=
+    \begin{pmatrix}
+    -0.44301884 & -0.47987252 & -0.51672621 & -0.55357989 \\
+    0.70974242 &  0.26404992 & -0.18164258 & -0.62733508 \\
+    -0.36645027 &  0.79201995 & -0.48468907 &  0.05911940 \\
+    \end{pmatrix} 
+$$
+
+Kết quả cuối cùng của *Singular Value Decomposition*
+
+$$
+    \mathbf{\hat{A}}_k =
+    \begin{pmatrix}
+    -0.09654784 &  0.76855612 & -0.47716104 \\
+    -0.24551564 &  0.48961420 &  0.32759876 \\
+    -0.39448345 &  0.21067228 &  0.68166006 \\
+    -0.54345125 & -0.06826963 & -0.43747224 \\
+    -0.69241905 & -0.34721155 & -0.09462554 
+    \end{pmatrix}
+    \begin{pmatrix}
+    \sqrt 2.86441422e+03 & 0 & 0  \\
+    0 & \sqrt 5.58578432e+00 & 0  \\
+    0 & 0 & \sqrt 1.90476307e-13  \\
+    \end{pmatrix}
+    \begin{pmatrix}
+    -0.44301884 & -0.47987252 & -0.51672621 & -0.55357989 \\
+    0.70974242 &  0.26404992 & -0.18164258 & -0.62733508 \\
+    -0.36645027 &  0.79201995 & -0.48468907 &  0.05911940 \\
+    \end{pmatrix} 
+    =
+    \begin{pmatrix}
+    3.5783889   & 2.95925391 & 2.34011948 & 1.72098462 \\
+    6.642581    & 6.61109972 & 6.57961822 & 6.54813685 \\
+    9.70677341  & 10.26294563 & 10.81911733 & 11.37528936 \\
+    12.77096583 & 13.91479077 & 15.05861647 & 16.20244153 \\
+    15.83515801 & 17.56663642 & 19.29811531 & 21.02959375 \\
+    \end{pmatrix}
+$$
+
+Ở trên là cách hoạt động của hàm `Singular_Value_Decomposition()`:
+
+```python
+def Singular_Value_Decomposition(self):
+    A = self.Original_Matrix
+    AtA = np.matmul(A.T, A)
+    V = self.Find_Eigenvalues_and_Eigenvectors(AtA)[1]
+    
+    D = self.Sigma_Matrix(AtA)
+    
+    U = np.zeros((self.Shape[0], self.K), dtype='float_')
+    for i in range(self.K):
+        U[:, i] = np.matmul(A, V[:, i]) / D[i, i]
+    
+    Result = np.matmul(U[:, :self.K], D[:self.K, :self.K]) @ V[:, :self.K].T
+    return Result
+```
+
+Hàm `Singular_Value_Decomposition()` là bước quan trọng trong quá trình nén ảnh bằng phương pháp *Singular Value Decomposition*, giúp phân tích và tạo ra các ma trận cần thiết để nén ảnh hiệu quả. Công thức liên quan giúp hình dung rõ ràng cách thức hoạt động và ý nghĩa của từng thành phần trong *Singular Value Decomposition*
+
+1. Khởi tạo **Variable** để lưu Lưu trữ ma trận ảnh gốc vào biến **A**
+```python
+A = self.Original_Matrix
+```
+2. Tính $\mathbf A^\mathsf{T}\mathbf A$
