@@ -1040,9 +1040,6 @@ $$
 
 ### Dùng hàm `Find_Eigenvalues_and_Eigenvectors()` và công thức trên để tính $U$ có gì khác nhau. 
 
-### **Bảng So sánh hai phương pháp tính ma trận \( U \) trong SVD**
-
-### **Bảng So sánh hai phương pháp tính ma trận $U$ trong SVD**
 
 | **Tiêu chí**                        | **Phương pháp công thức**: $U[:, i] = \frac{A \cdot V[:, i]}{\sigma_i}$                         | **Phương pháp dùng eigenvectors**: $U$ là các vector riêng của $A A^T$               |
 |-------------------------------------|----------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------|
