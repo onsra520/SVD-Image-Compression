@@ -755,15 +755,15 @@ $$
     \mathbf{\hat{A}}_k = \mathbf{U_k\Sigma_k V^\mathsf{T}_k}
 $$
 
-- Chỉ giữ lại *$\mathbf{k}$* giá trị *Singular Values* lớn nhất.
-- *$\mathbf{k}$-rank approximation* giúp giảm bớt kích thước dữ liệu.
+- Chỉ giữ lại **$\mathbf{k}$** giá trị *Singular Values* lớn nhất.
+- **$\mathbf{k}-rank approximation$** giúp giảm bớt kích thước dữ liệu.
 
 $
     \\
     \\
 $
 
-Ví dụ ta lấy *$\mathbf{k}$* = 3 với ma trận 
+Ví dụ ta lấy **$\mathbf{k} = 3$** với ma trận 
 $
     \mathbf A =
     \begin{pmatrix}
@@ -788,6 +788,7 @@ $$
 $$
 
 - Với $\mathbf{U_k}$: Giữ lại 3 cột đầu tiên của ma trận **$\mathbf U$**. Ma trận **$\mathbf{U_3}$** có kích thước là $5 \times 3$
+- 
 $$
     \mathbf{U_3} = 
     \begin{pmatrix}
@@ -847,22 +848,55 @@ $$
 def Singular_Value_Decomposition(self):
     A = self.Original_Matrix
     AtA = np.matmul(A.T, A)
+    U = np.zeros((self.Shape[0], self.K), dtype='float_')
+    D = self.Sigma_Matrix(AtA)
     V = self.Find_Eigenvalues_and_Eigenvectors(AtA)[1]
     
-    D = self.Sigma_Matrix(AtA)
-    
-    U = np.zeros((self.Shape[0], self.K), dtype='float_')
-    for i in range(self.K):
-        U[:, i] = np.matmul(A, V[:, i]) / D[i, i]
-    
+    for Column in range(self.K):
+        U[:, Column] = np.matmul(A, V[:, Column]) / D[Column, Column]
     Result = np.matmul(U[:, :self.K], D[:self.K, :self.K]) @ V[:, :self.K].T
+    
     return Result
 ```
 
 Hàm `Singular_Value_Decomposition()` là bước quan trọng trong quá trình nén ảnh bằng phương pháp *Singular Value Decomposition*, giúp phân tích và tạo ra các ma trận cần thiết để nén ảnh hiệu quả. Công thức liên quan giúp hình dung rõ ràng cách thức hoạt động và ý nghĩa của từng thành phần trong *Singular Value Decomposition*
 
-1. Khởi tạo **Variable** để lưu Lưu trữ ma trận ảnh gốc vào biến **A**
+### 1. Khởi tạo **Variable** để lưu Lưu trữ ma trận ảnh gốc vào biến **A**
 ```python
 A = self.Original_Matrix
 ```
-2. Tính $\mathbf A^\mathsf{T}\mathbf A$
+### 2. Tìm *Eigenvectors* của $\mathbf V= \mathbf A^\mathsf{T}\mathbf A$ .
+
+```python
+AtA = np.matmul(A.T, A)
+V = self.Find_Eigenvalues_and_Eigenvectors(AtA)[1]
+```
+
+- Sử dụng hàm `Find_Eigenvalues_and_Eigenvectors()` để tìm *Eigenvectors* của ma trận $\mathbf A^\mathsf{T} \mathbf A$ có kích thước $n \times n$ , với $n$ là số cột của ma trận $\mathbf A$.
+- Các *Eigenvector* sẽ tạo thành ma trận $V$ trong phân tích *Singular Value Decomposition*.
+
+### 3. Xây dựng **Ma trận Σ**:
+
+```python
+D = self.Sigma_Matrix(AtA)
+```
+
+- Gọi hàm `Sigma_Matrix()` để tạo Ma trận đường chéo **Σ** chứa các **Eigenvalue Value** được tính từ ma trận $\mathbf A^\mathsf{T}\mathbf A$.
+
+### 4. Tính ma trận $U$
+
+```python
+U = np.zeros((self.Shape[0], self.K), dtype='float_')
+for i in range(self.K):
+    U[:, i] = np.matmul(A, V[:, i]) / D[i, i]
+```
+- Tạo 1 ma trận 0 với kích thước là $m \times k$, với $m$ là số hàng của ma trận **$A$**
+
+
+
+
+
+
+
+
+
