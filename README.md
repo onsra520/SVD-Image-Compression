@@ -661,8 +661,7 @@ $$
 $\Rightarrow$ Có thể chọn **Eigenvalue** từ **U** = $\mathbf A \mathbf A^\mathsf{T}$ hoặc **V** = $\mathbf A^\mathsf{T} \mathbf A$
 
 
-
-### Kết quả cuối cùng của SVD
+### Kết quả cuối cùng của *Singular Value Decomposition*
 
 $$
     \mathbf A = \mathbf{U \Sigma V^\mathsf{T}}
@@ -702,7 +701,9 @@ $$
     \end{pmatrix}      
 $$
 
-Lý do sai số cao vì khi tìm **Eigenvectors** từ hàm `linalg.eig()` của thư viện `Numpy`:
+> Kết quả có sai số cao vì khi tìm **Eigenvectors** từ hàm `linalg.eig()` của thư viện `Numpy`:
+
+Sự khác nhau của hàm *`linalg.eig()`* và *`linalg.eigh()`*
 
 | **Thuộc tính**                     | **`linalg.eigh()`**                                                | **`linalg.eig()`**                                              |
 |-------------------------------------|-----------------------------------------------------------|-------------------------------------------------------|
@@ -712,6 +713,27 @@ Lý do sai số cao vì khi tìm **Eigenvectors** từ hàm `linalg.eig()` của
 | **Hiệu suất**                      | Tối ưu hơn về tốc độ và độ chính xác cho ma trận đối xứng hoặc Hermitian. | Chậm hơn vì hỗ trợ cho mọi loại ma trận. |
 | **Sắp xếp kết quả**                | Giá trị riêng được sắp xếp theo thứ tự tăng dần.         | Giá trị riêng không được sắp xếp.                     |
 | **Hàm tương ứng trong Linear Algebra** | **Phân rã Eigen** cho ma trận Hermitian.                    | **Phân rã Eigen** tổng quát.                              |
+
+$\rArr$ Để cho ra kết quả đúng nhất khi tính Singular Value Decomposition ta sử dụng hàm *`linalg.eigh()`*
+
+
+
+## **Matrix Approximation** - Ma trận xấp xỉ
+
+Matrix Approximation là một kỹ thuật trong đại số tuyến tính và khoa học dữ liệu nhằm tìm ra một ma trận gần đúng với ma trận gốc, nhưng có thứ hạng (rank) thấp hơn hoặc đơn giản hơn. Mục tiêu của việc xấp xỉ là giảm kích thước và độ phức tạp của dữ liệu, đồng thời vẫn giữ lại càng nhiều thông tin quan trọng càng tốt.
+
+### Mô hình của *Matrix Approximation*
+
+Giả sử bạn có một ma trận $A \in \mathbb{R}^{m \times n}$, ma trận này có thể được xấp xỉ bằng một ma trận $\hat{A}$ có thứ hạng thấp hơn:
+
+$$
+A \approx \hat{A}
+$$
+
+Trong đó:
+
+- **A**: Ma trận gốc.
+- **$\hat{A}$**: Ma trận xấp xỉ có thứ hạng thấp hơn.
 
 
 
