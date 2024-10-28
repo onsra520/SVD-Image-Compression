@@ -691,10 +691,27 @@ $$
     0.70974242 &  0.26404992 & -0.18164258 & -0.62733508 \\
     -0.36645027 &  0.79201995 & -0.48468907 &  0.05911940 \\
     -0.07257593 &  0.50141641 & -0.78510502 &  0.35626454
-    \end{pmatrix}    
+    \end{pmatrix}  
+    =
+    \begin{pmatrix}
+    3.57838896 & 2.95925411 & 2.34011949 & 1.7209847 \\
+    6.64258118 & 6.61109983 & 6.57961831 & 6.54813692 \\
+    9.70677343 & 10.26294547 & 10.8191172 & 11.37528914 \\
+    12.77096579 & 13.91479089 & 15.05861618 & 16.20244136 \\
+    15.83515804 & 17.56663653 & 19.29811507 & 21.02959357
+    \end{pmatrix}      
 $$
 
+Lý do sai số cao vì khi tìm **Eigenvectors** từ hàm `linalg.eig()` của thư viện `Numpy`:
 
+| **Thuộc tính**                     | **`linalg.eigh()`**                                                | **`linalg.eig()`**                                              |
+|-------------------------------------|-----------------------------------------------------------|-------------------------------------------------------|
+| **Mục đích**                       | Dùng cho ma trận đối xứng hoặc Hermitian $\mathbf A =\mathbf A^\mathsf{T}$ hoặc $\mathbf A =\mathbf A^\mathsf{H}$. | Dùng cho mọi loại ma trận vuông.                      |
+| **Đầu vào**                        | Ma trận đối xứng thực hoặc Hermitian phức.                | Bất kỳ ma trận vuông nào.                             |
+| **Kết quả**                        | Giá trị riêng luôn là số thực (đối với ma trận đối xứng). | Giá trị riêng có thể là thực hoặc phức.               |
+| **Hiệu suất**                      | Tối ưu hơn về tốc độ và độ chính xác cho ma trận đối xứng hoặc Hermitian. | Chậm hơn vì hỗ trợ cho mọi loại ma trận. |
+| **Sắp xếp kết quả**                | Giá trị riêng được sắp xếp theo thứ tự tăng dần.         | Giá trị riêng không được sắp xếp.                     |
+| **Hàm tương ứng trong Linear Algebra** | **Phân rã Eigen** cho ma trận Hermitian.                    | **Phân rã Eigen** tổng quát.                              |
 
 
 
