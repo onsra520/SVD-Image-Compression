@@ -842,7 +842,7 @@ $$
     \end{pmatrix}
 $$
 
-Ở trên là cách hoạt động của hàm `Singular_Value_Decomposition()`:
+Ở trên là cách hoạt động cơ bản của hàm `Singular_Value_Decomposition()`:
 
 ```python
 def Singular_Value_Decomposition(self):
@@ -887,15 +887,182 @@ D = self.Sigma_Matrix(AtA)
 
 ```python
 U = np.zeros((self.Shape[0], self.K), dtype='float_')
-for i in range(self.K):
-    U[:, i] = np.matmul(A, V[:, i]) / D[i, i]
+for Column in range(self.K):
+    U[:, Column] = np.matmul(A, V[:, Column]) / D[Column, Column]
 ```
-- Tạo 1 ma trận 0 với kích thước là $m \times k$, với $m$ là số hàng của ma trận **$A$**
+- Tạo 1 ma trận *Zero* với kích thước là $m \times k$, với $m$ là số hàng của ma trận **$A$**
+
+- Vòng lặp `for Column in range(self.K)` duyệt qua các thành phần **Singular Values** mà ta muốn giữ lại trong quá trình *Image Compression*, số lượng thành phần được giữ lại là **$k$**.
+
+Sử dụng công thức tính *Singular Value Decomposition* cơ bản để tính $U$.
+
+$$
+    \mathbf{A} = \mathbf{U\Sigma V^\mathsf{T}}
+    \quad\rightarrow\quad
+    \mathbf{U[:,\mathbf{i}]} = \frac{\mathbf{A} \cdot \mathbf{V[:,\mathbf{i}]}}{\sigma_i}
+$$
 
 
+- Trong đó:
 
+  - $\mathbf{U[:,\mathbf{i}]}$ là cột thứ $i$ của ma trận $U$.
+  - $A$ là ma trận gốc.
+  - $\mathbf{V[:,\mathbf{i}]}$ là cột thứ $i$ của ma trận $V$
+  - $\sigma_i$ là Singular Value thứ $i$.
 
+Ví dụ ta có 1 ma trận $A$ kích thước $3 \times 2$ như sau:
 
+$$
+    \mathbf A =
+    \begin{pmatrix}
+    3 & 2 \\
+    2 & 3 \\
+    1 & 0 \\
+    \end{pmatrix}
+$$
+
+**Eigenvalues** của ma trận $\mathbf A^\mathsf{T} \mathbf A$:
+
+$$
+    \lambda_1 =25, \quad \lambda_2 = 2
+$$
+
+**Eigenvector** tương ứng của ma trận $\mathbf A^\mathsf{T} \mathbf A$:
+
+$$
+    \mathbb{v_1} =
+    \begin{pmatrix}
+    \frac{1}{\sqrt{2}} \\
+    \frac{1}{\sqrt{2}} \\
+    \end{pmatrix}
+    ,\quad
+    \mathbb{v_2} =
+    \begin{pmatrix}
+    \frac{1}{\sqrt{2}} \\
+    -\frac{1}{\sqrt{2}} \\
+    \end{pmatrix}
+    \quad \rightarrow \quad
+    \mathbf{V} =
+    \begin{pmatrix}
+    \frac{1}{\sqrt{2}} & \frac{1}{\sqrt{2}} \\
+    \frac{1}{\sqrt{2}} & -\frac{1}{\sqrt{2}} \\
+    \end{pmatrix}
+$$
+
+**Singular Values** $\sigma_i$: 
+
+$$
+    \sigma_1 =\sqrt{25} = 5, \quad \sigma_2 = \sqrt{2}
+$$
+
+Tính các cột của ma trận $U$:
+
+- Tính cột thứ nhất của $U$ với $i = 1$:
+
+$$
+    \mathbf{U[:,\mathbf{1}]} = \frac{\mathbf{A} \cdot \mathbf{V[:,\mathbf{1}]}}{\sigma_1} \\
+$$
+
+$$
+    \frac{\mathbf{A} \cdot \mathbf{V[:,\mathbf{1}]}}{\sigma_1} = 
+    \frac{
+    \begin{pmatrix}
+    3 & 2 \\
+    2 & 3 \\
+    1 & 0 \\
+    \end{pmatrix}
+    \begin{pmatrix}
+    \frac{1}{\sqrt{2}} \\
+    \frac{1}{\sqrt{2}} \\
+    \end{pmatrix}}
+    {5}
+    =
+    \frac{
+    \begin{pmatrix}
+    \frac{5}{\sqrt{2}} \\
+    \frac{5}{\sqrt{2}} \\
+    \frac{1}{\sqrt{2}} \\       
+    \end{pmatrix}}
+    {5}
+    = 
+    \begin{pmatrix}
+    \frac{1}{\sqrt{2}} \\
+    \frac{1}{\sqrt{2}} \\
+    \frac{\sqrt{2}}{10} \\
+    \end{pmatrix}
+$$
+
+- Tính cột thứ hai của $U$ với $i = 2$:
+
+$$
+    \mathbf{U[:,\mathbf{2}]} = \frac{\mathbf{A} \cdot \mathbf{V[:,\mathbf{2}]}}{\sigma_2} \\
+$$
+
+$$
+    \frac{\mathbf{A} \cdot \mathbf{V[:,\mathbf{2}]}}{\sigma_2} = 
+    \frac{
+    \begin{pmatrix}
+    3 & 2 \\
+    2 & 3 \\
+    1 & 0 \\
+    \end{pmatrix}
+    \begin{pmatrix}
+    \frac{1}{\sqrt{2}} \\
+    -\frac{1}{\sqrt{2}} \\
+    \end{pmatrix}}
+    {\sqrt{2}}
+    =
+    \frac{
+    \begin{pmatrix}
+    \frac{1}{\sqrt{2}} \\
+    -\frac{1}{\sqrt{2}} \\
+    \frac{1}{\sqrt{2}} \\       
+    \end{pmatrix}}
+    {\sqrt{2}}
+    = 
+    \begin{pmatrix}
+    \frac{1}{2} \\
+    -\frac{1}{2} \\
+    \frac{1}{2} \\
+    \end{pmatrix}
+$$
+
+Kết quả ma trận $U$ là ma trận có kích thước $3 \times 2$:
+
+$$
+    \mathbf{U} =
+    \begin{pmatrix}
+    \frac{1}{\sqrt{2}} & \frac{1}{2} \\
+    \frac{1}{\sqrt{2}} & -\frac{1}{2} \\
+    \frac{\sqrt{2}}{10} & \frac{1}{2} \\
+    \end{pmatrix}
+$$
+
+### Dùng hàm `Find_Eigenvalues_and_Eigenvectors()` và công thức trên để tính $U$ có gì khác nhau. 
+
+### **Bảng So sánh hai phương pháp tính ma trận \( U \) trong SVD**
+
+### **Bảng So sánh hai phương pháp tính ma trận $U$ trong SVD**
+
+| **Tiêu chí**                        | **Phương pháp công thức**: $U[:, i] = \frac{A \cdot V[:, i]}{\sigma_i}$                         | **Phương pháp dùng eigenvectors**: $U$ là các vector riêng của $A A^T$               |
+|-------------------------------------|----------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------|
+| **Ý tưởng**                        | Nhân ma trận $A$ với các vector riêng $V$ của $A^T A$ rồi chuẩn hóa bằng giá trị kỳ dị $\sigma_i$. | Tính Eigenvectors của ma trận $A A^T$ để tìm các cột của ma trận $U$.               |
+| **Đầu vào cần thiết**               | - Ma trận $A$ <br> - Ma trận $V$ (vector riêng của $A^T A$) <br> - Giá trị kỳ dị $\sigma_i$.   | - Ma trận $A$ <br> - Eigenvalues và Eigenvectors của $A A^T$.                       |
+| **Độ phức tạp tính toán**           | Nhanh hơn, vì chỉ cần nhân ma trận với vector và chia cho $\sigma_i$.                                        | Chậm hơn, vì cần tính eigenvalues và eigenvectors của ma trận $A A^T$ kích thước $n \times n$. |
+| **Độ ổn định số học**               | Nhạy cảm hơn với các giá trị kỳ dị nhỏ (do phép chia).                                                          | Ổn định hơn, nhưng có thể gặp vấn đề với các ma trận gần suy biến (singular).                 |
+| **Chi phí tính toán**               | **Thấp hơn**, vì chỉ cần nhân ma trận và chuẩn hóa.                                                             | **Cao hơn**, vì phải tính eigenvalues và eigenvectors của $A A^T$ với độ phức tạp $O(n^3)$. |
+| **Khi nào sử dụng?**                | Khi đã có sẵn các vector riêng $V$ và giá trị kỳ dị $\sigma_i$.                                          | Khi chỉ cần tính riêng ma trận $U$ mà không cần biết các vector riêng $V$.            |
+| **Ưu điểm**                        | - Nhanh và hiệu quả khi $V$ đã có. <br> - Tránh phải tính eigenvectors của $A A^T$.                     | - Phù hợp khi chỉ cần $U$. <br> - Không phụ thuộc vào $V$ hoặc giá trị kỳ dị.         |
+| **Nhược điểm**                     | - Không thể dùng nếu $\sigma_i = 0$. <br> - Yêu cầu có cả $V$ và $\sigma_i$.                       | - Tốn kém tài nguyên cho ma trận lớn. <br> - Khó triển khai khi $A A^T$ không khả nghịch. |
+
+---
+
+### **Kết luận**
+
+- **Phương pháp công thức** là lựa chọn tốt hơn nếu bạn đã có ma trận $V$ và giá trị kỳ dị $\sigma_i$, do chi phí tính toán thấp hơn và không cần tính eigenvalues và eigenvectors.
+- **Phương pháp eigenvectors** hữu ích khi bạn không cần quan tâm đến $V$ và chỉ muốn tìm ma trận $U$. Tuy nhiên, nó có thể tốn nhiều tài nguyên hơn đối với các ma trận lớn.
+
+Nếu bài toán của bạn yêu cầu tính đầy đủ SVD (cả $U, \Sigma, V$), thì phương pháp công thức sẽ nhanh và hiệu quả hơn. Nhưng nếu chỉ cần ma trận $U$, thì phương pháp dựa trên eigenvectors là một giải pháp hợp lý.
 
 
 
