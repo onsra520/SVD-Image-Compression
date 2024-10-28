@@ -1055,14 +1055,41 @@ $$
 | **Ưu điểm**                        | - Nhanh và hiệu quả khi $V$ đã có. <br> - Tránh phải tính eigenvectors của $A A^T$.                     | - Phù hợp khi chỉ cần $U$. <br> - Không phụ thuộc vào $V$ hoặc giá trị kỳ dị.         |
 | **Nhược điểm**                     | - Không thể dùng nếu $\sigma_i = 0$. <br> - Yêu cầu có cả $V$ và $\sigma_i$.                       | - Tốn kém tài nguyên cho ma trận lớn. <br> - Khó triển khai khi $A A^T$ không khả nghịch. |
 
----
+### 5. Tạo lại **Matrix Approximation** và trả về kết quả
 
-### **Kết luận**
+```python
+Result = np.matmul(U[:, :self.K], D[:self.K, :self.K]) @ V[:, :self.K].T
+return Result
+```
+  
+- Tính toán **Matrix Approximation** dựa trên công thức:
 
-- **Phương pháp công thức** là lựa chọn tốt hơn nếu bạn đã có ma trận $V$ và giá trị kỳ dị $\sigma_i$, do chi phí tính toán thấp hơn và không cần tính eigenvalues và eigenvectors.
-- **Phương pháp eigenvectors** hữu ích khi bạn không cần quan tâm đến $V$ và chỉ muốn tìm ma trận $U$. Tuy nhiên, nó có thể tốn nhiều tài nguyên hơn đối với các ma trận lớn.
+$$
+    \mathbf{\hat{A}}_k = \mathbf{U_k\Sigma_k V^\mathsf{T}_k}
+$$
 
-Nếu bài toán của bạn yêu cầu tính đầy đủ SVD (cả $U, \Sigma, V$), thì phương pháp công thức sẽ nhanh và hiệu quả hơn. Nhưng nếu chỉ cần ma trận $U$, thì phương pháp dựa trên eigenvectors là một giải pháp hợp lý.
+
+### 6. Hiển thị hình ảnh từ **Matrix Approximation**
+
+```python
+def Show_Image(self, Result):
+    Img_Array = np.clip(Result * 255, 0, 255).astype(np.uint8)
+    
+    if not os.path.exists('Result_Folder'):
+        os.makedirs('Result_Folder')
+
+    Filename = f"{self.K}_SVD_Image_Compression.jpg"
+    cv2.imwrite(os.path.join('Result_Folder', Filename), Img_Array)
+
+    Img = Image.fromarray(Img_Array)
+    Img.show()
+```
+- Mục đích: Hiển thị và lưu ảnh đã được nén.
+- Cách hoạt động:
+    - Chuẩn hóa lại ma trận ảnh về phạm vi $[0,255]$
+    - Lưu ảnh nén trong thư mục `Result_Folder`. 
+    - Hiển thị ảnh bằng thư viện `PIL`.
+
 
 
 
