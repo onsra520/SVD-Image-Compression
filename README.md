@@ -756,15 +756,16 @@ $$
 $$
 
 - Chỉ giữ lại **$\mathbf{k}$** giá trị *Singular Values* lớn nhất.
-- **$\mathbf{k}-rank approximation$** giúp giảm bớt kích thước dữ liệu.
+- **$\mathbf{k}$-rank approximation** giúp giảm bớt kích thước dữ liệu.
 
-$
+$$
     \\
     \\
-$
+$$
 
-Ví dụ ta lấy **$\mathbf{k} = 3$** với ma trận 
-$
+Ví dụ ta lấy **$\mathbf{k} = 3$** với ma trận $\mathbf A$ đã tìm được $\mathbf U, \Sigma, \mathbf V^\mathsf{T}$ .
+
+$$
     \mathbf A =
     \begin{pmatrix}
     1 & 2 & 3 & 4 \\
@@ -773,8 +774,7 @@ $
     13 & 14 & 15 & 16 \\
     17 & 18 & 19 & 20 \\
     \end{pmatrix}
-$
-Ta đã tìm được $\mathbf U, \Sigma, \mathbf V^\mathsf{T}$  . 
+$$
 
 - Với **$\Sigma_k$** :Giữ lại 3 *Singular Values* lớn nhất trong ma trận **$\Sigma$**. Ma trận **$\Sigma_3$** có kích thước là $3 \times 3$
 
@@ -788,7 +788,7 @@ $$
 $$
 
 - Với $\mathbf{U_k}$: Giữ lại 3 cột đầu tiên của ma trận **$\mathbf U$**. Ma trận **$\mathbf{U_3}$** có kích thước là $5 \times 3$
-- 
+  
 $$
     \mathbf{U_3} = 
     \begin{pmatrix}
