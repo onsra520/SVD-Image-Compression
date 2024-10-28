@@ -714,7 +714,7 @@ Sự khác nhau của hàm *`linalg.eig()`* và *`linalg.eigh()`*
 | **Sắp xếp kết quả**                | Giá trị riêng được sắp xếp theo thứ tự tăng dần.         | Giá trị riêng không được sắp xếp.                     |
 | **Hàm tương ứng trong Linear Algebra** | **Phân rã Eigen** cho ma trận Hermitian.                    | **Phân rã Eigen** tổng quát.                              |
 
-$\rArr$ Để cho ra kết quả đúng nhất khi tính Singular Value Decomposition ta sử dụng hàm *`linalg.eigh()`*
+$\Rightarrow$ Để cho ra kết quả đúng nhất khi tính Singular Value Decomposition ta sử dụng hàm *`linalg.eigh()`*
 
 
 
@@ -722,7 +722,7 @@ $\rArr$ Để cho ra kết quả đúng nhất khi tính Singular Value Decompos
 
 Matrix Approximation là một kỹ thuật trong đại số tuyến tính và khoa học dữ liệu nhằm tìm ra một ma trận gần đúng với ma trận gốc, nhưng có thứ hạng (rank) thấp hơn hoặc đơn giản hơn. Mục tiêu của việc xấp xỉ là giảm kích thước và độ phức tạp của dữ liệu, đồng thời vẫn giữ lại càng nhiều thông tin quan trọng càng tốt.
 
-### Mô hình của *Matrix Approximation*
+### Mô hình của *Matrix Approximation*.
 
 Giả sử bạn có một ma trận $A \in \mathbb{R}^{m \times n}$, ma trận này có thể được xấp xỉ bằng một ma trận $\hat{A}$ có thứ hạng thấp hơn:
 
@@ -735,6 +735,31 @@ Trong đó:
 - **A**: Ma trận gốc.
 - **$\hat{A}$**: Ma trận xấp xỉ có thứ hạng thấp hơn.
 
+###  **Matrix Approximation** trong **Singular Value Decomposition**
 
+Kỹ thuật này xấp xỉ ma trận bằng cách sử dụng các *Singular Values* lớn nhất, giữ lại thông tin quan trọng và bỏ đi các giá trị nhỏ không đáng kể.
 
+$$
+    \mathbf{\hat{A}}_k = \mathbf{U_k\Sigma_k V^\mathsf{T}_k}
+$$
 
+- Chỉ giữ lại *$\mathbf{k}$* giá trị *Singular Values* lớn nhất.
+- *$\mathbf{k}$-rank approximation* giúp giảm bớt kích thước dữ liệu.
+
+$
+    \\
+    \\
+$
+
+Ví dụ với ma trận 
+$
+    \mathbf A =
+    \begin{pmatrix}
+    1 & 2 & 3 & 4 \\
+    5 & 6 & 7 & 8 \\
+    9 & 10 & 11 & 12 \\
+    13 & 14 & 15 & 16 \\
+    17 & 18 & 19 & 20 \\
+    \end{pmatrix}
+$
+Ta đã tìm được $\mathbf U, \Sigma, \mathbf V^\mathsf{T}$
