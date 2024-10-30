@@ -221,8 +221,8 @@ Khi bạn chuyển đổi hình ảnh màu sang ảnh xám bằng `cv2.cvtColor(
 $Y = 0.299 \cdot R + 0.587 \cdot G + 0.114 \cdot B$
 
 Trong đó:
-- \( R, G, B \): Giá trị màu của từng pixel trong ba kênh màu.
-- \( Y \): Giá trị độ xám tương ứng.
+- $R, G, B$: Giá trị màu của từng pixel trong ba kênh màu.
+- $Y$: Giá trị độ xám tương ứng.
 
 Vì mặc định của thư viện OpenCV khi đọc ảnh là ở định đạng màu **BGR** nên ta phải nhân tương ứng với vector:
 
@@ -467,7 +467,7 @@ Trong **Singular Value Decomposition** ma trận **Σ** chứa các **Singular V
 
 - **Ma trận Σ** là một ma trận chéo, nghĩa là chỉ có các phần tử nằm trên đường chéo chính là khác không, còn lại là **0**.
   
-- Các phần tử trên đường chéo của **Σ** là các **Singular Values** của ma trận \( A \). Các giá trị này được sắp xếp theo thứ tự giảm dần:
+- Các phần tử trên đường chéo của **Σ** là các **Singular Values** của ma trận $A $. Các giá trị này được sắp xếp theo thứ tự giảm dần:
 
 $$
 \Sigma = 
@@ -1086,6 +1086,110 @@ def Show_Image(self, Result):
     - Chuẩn hóa lại ma trận ảnh về phạm vi $[0,255]$
     - Lưu ảnh nén trong thư mục `Result_Folder`. 
     - Hiển thị ảnh bằng thư viện `PIL`.
+
+## Đánh giá mô hình
+
+```python
+def Performance_Metrics(self):
+    Compression_Ratio = (self.Shape[0]*self.Shape[1]) / (self.K*(self.Shape[0] + self.Shape[1] + 1))
+    print(f'Compression Ratio: {Compression_Ratio}')
+    MSE = np.sum(np.square(self.Original_Matrix - self.Result))/(self.Shape[0]*self.Shape[1])
+    print(f'MSE: {MSE} \n')
+```
+
+## **Compression Ratio (CR)**
+
+- **Định nghĩa**:  
+  Compression Ratio (CR) là **tỷ lệ giữa kích thước bộ nhớ của ảnh gốc và ảnh đã nén**. Nó cho biết mức độ tiết kiệm dung lượng sau khi ảnh được nén bằng phương pháp **SVD**.
+
+- **Công thức**:  
+
+$$
+  CR = \frac{m \times n}{k \times (m + n + 1)}
+$$
+
+  Trong đó:
+  - $m$: Số dòng của ma trận ảnh (chiều cao ảnh).  
+  - $n$: Số cột của ma trận ảnh (chiều rộng ảnh).  
+  - $k$: Số thành phần kỳ dị (**Singular Values**) được giữ lại trong quá trình nén.  
+
+---
+
+### **Ý nghĩa của các thành phần trong công thức**
+1. **Ảnh gốc**:  
+   Được biểu diễn bằng một ma trận có kích thước $m \times n$.  
+   → Bộ nhớ cần để lưu ảnh gốc là $m \times n$ phần tử.
+
+2. **Ảnh đã nén** sau SVD gồm 3 ma trận:
+   - **Ma trận U**: Kích thước $m \times k$.
+   - **Ma trận $\Sigma$**: Đường chéo, kích thước $k \times k$.
+   - **Ma trận V**: Kích thước $n \times k$.
+
+3. **Kích thước bộ nhớ của ảnh đã nén**:  
+   Để lưu trữ ảnh sau khi nén, cần:
+   - $m \times k$ phần tử cho $U$,
+   - $k$ phần tử cho đường chéo của $\Sigma$,
+   - $n \times k$ phần tử cho $V$.
+
+4. **Tổng bộ nhớ của ảnh nén**: 
+
+   $$
+   k \times (m + n + 1)
+   $$
+
+---
+
+### **Phân tích Compression Ratio qua ví dụ**
+
+Giả sử ảnh có:
+- $m = 1000$, $n = 800$ (kích thước 1000x800 pixel).
+- Giữ lại $k = 50$ thành phần kỳ dị.
+
+### **Tính CR**:
+
+$$
+CR = \frac{1000 \times 800}{50 \times (1000 + 800 + 1)} = \frac{800000}{50 \times 1801} = \frac{800000}{90050} \approx 8.89
+$$
+
+- **Kết quả**: CR bằng **8.89**, tức là ảnh nén cần ít bộ nhớ hơn ảnh gốc khoảng **8.89 lần**.
+
+---
+
+### **Ý nghĩa của Compression Ratio trong thực tế**
+- **CR càng cao**: Mức độ nén càng lớn → Tiết kiệm nhiều bộ nhớ hơn.
+- **Nhược điểm**: Khi $k$ nhỏ, CR tăng nhưng chất lượng ảnh giảm.
+- **Chọn $k$ hợp lý**: Cần cân bằng giữa **CR** và **chất lượng ảnh** (thông qua các chỉ số như PSNR – Peak Signal-to-Noise Ratio).
+
+---
+
+## Mean Square Error (MSE)
+
+**Mean Square Error (MSE)** là một thước đo phổ biến được sử dụng để đánh giá chất lượng của một ảnh nén so với ảnh gốc. MSE tính toán mức độ khác biệt giữa các pixel của ảnh gốc và ảnh đã nén, giúp xác định mức độ suy giảm chất lượng do quá trình nén.
+
+
+
+### Công Thức Tính MSE
+MSE được tính theo công thức sau:
+
+$$
+\text{MSE} = \frac{1}{N} \sum_{i=1}^{N} (I_{original}[i] - I_{compressed}[i])^2
+$$
+
+Trong đó:
+- $I_{original}[i]$ là giá trị pixel tại vị trí $i$ của ảnh gốc.
+- $I_{compressed}[i]$ là giá trị pixel tại vị trí $i$ của ảnh nén.
+- $N$ là tổng số pixel trong ảnh.
+
+### Giải Thích Chi Tiết
+
+| **Thuộc Tính**            | **Mô Tả**                                                                                          |
+|---------------------------|----------------------------------------------------------------------------------------------------|
+| **Ý Nghĩa của MSE**       | - MSE đo lường **độ chênh lệch** giữa hai ảnh. <br> - MSE nhỏ: Ảnh nén gần giống ảnh gốc. <br> - MSE lớn: Có sự khác biệt đáng kể. |
+| **Cách Thức Tính Toán**   | - **Sự khác biệt giữa các pixel**: So sánh giá trị pixel tương ứng của ảnh gốc và ảnh nén. <br> - **Bình phương sự khác biệt**: Loại bỏ giá trị âm bằng cách bình phương. <br> - **Tính trung bình**: Lấy trung bình tất cả các giá trị bình phương để có MSE. |
+| **Đơn Vị Của MSE**        | - **Squared intensity**: Nếu pixel có giá trị từ 0 đến 255, thì MSE sẽ có giá trị từ 0 đến 65,025. |
+| **Ưu điểm**               | - Dễ tính toán và thực hiện. <br> - Cung cấp một giá trị duy nhất để đánh giá chất lượng ảnh nén. |
+| **Nhược điểm**            | - Không phản ánh tốt cảm nhận của con người về chất lượng ảnh. <br> - Nhạy cảm với sự thay đổi lớn: Một vài pixel khác biệt lớn có thể làm tăng MSE đáng kể. |
+| **Ứng Dụng của MSE**      | - **Nén ảnh**: Đánh giá chất lượng ảnh nén so với ảnh gốc. <br> - **Khôi phục ảnh**: Đo lường độ chính xác của ảnh được khôi phục. <br> - **Học máy**: Đánh giá độ chính xác của các mô hình dự đoán. |
 
 
 
