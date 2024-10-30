@@ -1113,39 +1113,13 @@ $$
   - $n$: Số cột của ma trận ảnh (chiều rộng ảnh).  
   - $k$: Số thành phần kỳ dị (**Singular Values**) được giữ lại trong quá trình nén.  
 
----
-
-### **Ý nghĩa của các thành phần trong công thức**
-1. **Ảnh gốc**:  
-   Được biểu diễn bằng một ma trận có kích thước $m \times n$.  
-   → Bộ nhớ cần để lưu ảnh gốc là $m \times n$ phần tử.
-
-2. **Ảnh đã nén** sau SVD gồm 3 ma trận:
-   - **Ma trận U**: Kích thước $m \times k$.
-   - **Ma trận $\Sigma$**: Đường chéo, kích thước $k \times k$.
-   - **Ma trận V**: Kích thước $n \times k$.
-
-3. **Kích thước bộ nhớ của ảnh đã nén**:  
-   Để lưu trữ ảnh sau khi nén, cần:
-   - $m \times k$ phần tử cho $U$,
-   - $k$ phần tử cho đường chéo của $\Sigma$,
-   - $n \times k$ phần tử cho $V$.
-
-4. **Tổng bộ nhớ của ảnh nén**: 
-
-   $$
-   k \times (m + n + 1)
-   $$
-
----
-
-### **Phân tích Compression Ratio qua ví dụ**
+#### **Phân tích Compression Ratio qua ví dụ**
 
 Giả sử ảnh có:
 - $m = 1000$, $n = 800$ (kích thước 1000x800 pixel).
 - Giữ lại $k = 50$ thành phần kỳ dị.
 
-### **Tính CR**:
+#### **Tính CR**:
 
 $$
 CR = \frac{1000 \times 800}{50 \times (1000 + 800 + 1)} = \frac{800000}{50 \times 1801} = \frac{800000}{90050} \approx 8.89
