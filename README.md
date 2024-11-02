@@ -1134,6 +1134,9 @@ $$
 - **Nhược điểm**: Khi $k$ nhỏ, CR tăng nhưng chất lượng ảnh giảm.
 - **Chọn $k$ hợp lý**: Cần cân bằng giữa **CR** và **chất lượng ảnh** (thông qua các chỉ số như PSNR – Peak Signal-to-Noise Ratio).
 
+![image](https://github.com/user-attachments/assets/d60e8f12-2670-4d46-a20a-3431d78e293a)
+
+
 ---
 
 ## Mean Square Error (MSE)
