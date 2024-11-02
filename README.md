@@ -216,7 +216,7 @@ Sau khi chạy đoạn code trên thì sẽ ra ma trận $3 \times 3$ với mỗ
 | y3 | [21, 40, 77]     | [26, 45, 82]     | [32, 50, 89]     |
 
 ### 2. Chuyển Đổi Sang Ảnh Xám
-Khi bạn chuyển đổi hình ảnh màu sang ảnh xám bằng `cv2.cvtColor(Image, cv2.COLOR_BGR2GRAY)`, OpenCV sử dụng công thức sau để tính giá trị độ xám cho mỗi pixel:
+Khi bạn chuyển đổi hình ảnh màu sang ảnh xám bằng `cv2.cvtColor(Image, cv2.COLOR_BGR2GRAY)`, Hoặc sử dụng công thức sau để tính giá trị độ xám cho mỗi pixel:
 
 $Y = 0.299 \cdot R + 0.587 \cdot G + 0.114 \cdot B$
 
