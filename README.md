@@ -1167,8 +1167,3 @@ Trong đó:
 | **Ưu điểm**               | - Dễ tính toán và thực hiện. <br> - Cung cấp một giá trị duy nhất để đánh giá chất lượng ảnh nén. |
 | **Nhược điểm**            | - Không phản ánh tốt cảm nhận của con người về chất lượng ảnh. <br> - Nhạy cảm với sự thay đổi lớn: Một vài pixel khác biệt lớn có thể làm tăng MSE đáng kể. |
 | **Ứng Dụng của MSE**      | - **Nén ảnh**: Đánh giá chất lượng ảnh nén so với ảnh gốc. <br> - **Khôi phục ảnh**: Đo lường độ chính xác của ảnh được khôi phục. <br> - **Học máy**: Đánh giá độ chính xác của các mô hình dự đoán. |
-
-
-
-
-
